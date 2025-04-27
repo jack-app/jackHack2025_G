@@ -3,10 +3,14 @@
 <div id="container"></div>
 <script>
 const container = document.getElementById('container')
-container.innerHTML = fetch(
+fetch(
     "https://jack-app.github.io/jackHack2025_G/other_file.html"
 ).then(
     (responce) => responce.text()
+).then(
+    (data) => {
+        container.innerHTML = data
+    }
 )
 </script>
 <p>test</p>
