@@ -1,12 +1,12 @@
 <script src="./index.js"></script>
 <script>main()</script>
 <p>test</p>
-<iframe src="https://jack-app.github.io/jackHack2025_G/other_file.html"></iframe>
+<iframe src="./other_file.html"></iframe>
 <div id="container"></div>
 <script>
 const container = document.getElementById('container')
 fetch(
-    "https://jack-app.github.io/jackHack2025_G/other_file.html"
+    "./other_file.html"
 ).then(
     (responce) => responce.text()
 ).then(
