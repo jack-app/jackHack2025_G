@@ -1,0 +1,7 @@
+@import url("start_page/index.css");
+@import url("game_page/index.css");
+@import url("result_page/index.css");
+
+.page_container {
+    display: none;
+}
