@@ -1,4 +1,4 @@
-function gamePage() {
+function GamePage(props) {
     return <h1>gamePage</h1>
 }
-export default gamePage;
+export default GamePage;

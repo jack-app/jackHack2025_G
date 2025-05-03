@@ -1,6 +1,6 @@
-class GameSetUp {
+export class GameSetUp {
 
 }
-class GameResult {
+export class GameResult {
     
 }
