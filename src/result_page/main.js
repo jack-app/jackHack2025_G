@@ -7,7 +7,7 @@ export class ResultPageHandler {
     }
 
     waitForComfirmation() {
-        // resolveが呼ばれるまで待機する．resolveはconfirmGameが呼ばれたときに呼ばれる
+        // resolveが呼ばれるまで待機する．resolveはconfirmResultが呼ばれたときに呼ばれる
         return new Promise((resolve) => {
             this.watingGameComfirmation.push(resolve);
         });
