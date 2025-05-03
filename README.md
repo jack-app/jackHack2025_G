@@ -95,9 +95,16 @@ git push origin <作業中のブランチ名>
 
 # コーディングのヒント
 
+## path
+
 JavaScriptの処理は`https://jack-app.github.io/jackHack2025_G/`に引き上げられて行われる．
 また，github.ioはdocsをルートとしてホスティングする．すなわち，`https://jack-app.github.io/jackHack2025_G/`は`docs/`に対応する．
 したがって，JavaScript内で相対パスを用いるときは，常に`docs/`を起点とする．
 たとえば，`docs/start_page/index.js`から`docs/start_page/background.png`を参照するときは，`./start_page/background.png`と書く．
 
 >>> VSCodeの補完を活用できないという問題がある．
+
+## マウスカーソルの操作
+
+https://qiita.com/redshoga/items/8f8579a60a8e5ed49d6d
+マウスカーソルをゲーム側で操作するにはマウスカーソルをエミュレートする必要がありそう
