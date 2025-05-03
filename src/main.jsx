@@ -19,7 +19,7 @@ class Game {
     this.root.render(<StrictMode>{component}</StrictMode>)
   }
 
-  async launch() {
+  async launchMainLoop() {
     let game_setup = new GameSetUp()
     let start_page_handler;
     let game_page_handler;
@@ -35,6 +35,7 @@ class Game {
       // ゲームページ
       game_page_handler = new GamePageHandler(game_setup)
       this.render(<GamePage handler={game_page_handler}/>)
+      this.run(game_page_handler)
       await game_page_handler.waitForGameEnd()
       game_result = game_page_handler.gameResult
 
@@ -44,9 +45,13 @@ class Game {
       await result_page_handler.waitForComfirmation()
     }
   }
+
+  async run(game_page_handler) {
+    // ゲーム本体の実行
+  }
 }
 
 const rootElement = document.getElementById('root')
 const game = new Game(rootElement)
 
-game.launch()
+game.launchMainLoop()
