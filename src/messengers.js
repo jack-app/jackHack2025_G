@@ -1,0 +1,6 @@
+class GameSetUp {
+
+}
+class GameResult {
+    
+}
