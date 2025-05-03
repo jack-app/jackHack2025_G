@@ -3,7 +3,7 @@ import { GameResult } from "../messengers";
 export class ResultPageHandler {
     constructor(gameResult) {
         this.gameResult = gameResult;
-        this.watingGameEnd = [];
+        this.watingGameComfirmation = [];
     }
 
     waitForComfirmation() {

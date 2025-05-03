@@ -4,6 +4,7 @@ export class GamePageHandler {
     constructor(gameSetup) {
         this.gameSetup = gameSetup ?? new GameSetUp();
         this.gameResult = new GameResult();
+        this.watingGameEnd = [];
     }
 
     waitForGameEnd() {
