@@ -6,5 +6,6 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'docs'
-  }
+  },
+  base: 'https://jack-app.github.io/jackHack2025_G/'
 })
