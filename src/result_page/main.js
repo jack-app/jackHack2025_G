@@ -1,9 +1,11 @@
 import { GameResult } from "../messengers";
 
 export class ResultPageHandler {
-    constructor(gameResult) {
+    constructor(gameResult,gameSetup) {
         this.gameResult = gameResult;
+        this.gameSetup = gameSetup;
         this.watingGameComfirmation = [];
+
     }
 
     waitForComfirmation() {
