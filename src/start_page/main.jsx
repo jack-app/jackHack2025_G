@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "./main.css"
+import "./user-select-area.css"
+import button_image from "./button-dummy.png"
 
 function StartPage(props) {
     const [difficulty, setDifficulty] = useState("normal")
@@ -13,8 +15,19 @@ function StartPage(props) {
                 <h1>windows x<br />explain</h1>
             </div>
             <div id="start-body-right">
-                <input onChange={(element) => props.handler.userNameUpdate(element.target.value)}></input>
-                <button onClick={() => props.handler.startGame()}>Start Game</button>
+                <div className="user-select-area">
+                    <div className="display-box">
+                        <div className="user-icon"></div>
+                        <div className="letters">
+                            <p>Player</p>
+                            <p>ユーザー名の入力</p>
+                        </div>
+                    </div>
+                    <div className="input-box">
+                        <input onChange={(element) => props.handler.userNameUpdate(element.target.value)}/>
+                        <img src={button_image} onClick={() => props.handler.startGame()}/>
+                    </div>
+                </div>
             </div>
         </div>
 
