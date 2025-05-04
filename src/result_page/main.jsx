@@ -28,11 +28,10 @@ function ResultPage(props) {
         your computer, press F8 to select Advanced Startup Options, and then
         select Safe Mode.</p>
 
-        <br/>
+        
         <p>Technical information:</p>
         
         <p>*** STOP: 0x0000007B (0xF741884C, 0xC0000034, 0x00000000, 0x00000000)</p>
-        <br/>
         <p>Beginning dump of physical memory<br/>
         Physical memory dump complete.<br/>
         Contact your system administrator or technical support group for furtherassistance.</p>

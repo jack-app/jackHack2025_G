@@ -1,6 +1,7 @@
 export class GameSetUp {
     constructor(){
-        this.username = "testname";
+        this.username = "";
+        this.difficulty = "";
     }
 
 }
