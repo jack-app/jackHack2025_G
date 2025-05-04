@@ -40,7 +40,7 @@ class Game {
       game_result = game_page_handler.gameResult
 
       // 結果ページ
-      result_page_handler = new ResultPageHandler(game_result)
+      result_page_handler = new ResultPageHandler(game_result,game_setup)
       this.render(<ResultPage handler={result_page_handler}/>)
       await result_page_handler.waitForComfirmation()
     }
