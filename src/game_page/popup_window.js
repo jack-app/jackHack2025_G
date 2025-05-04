@@ -2,10 +2,10 @@ export class PopUpWindowBase {
   // x, y : from top-left of GameWindow
   // type : type of popup window
 
-  constructor(x, y, type) {
+  constructor(x, y, onScoreUp) {
     this.x = x;
     this.y = y;
-    this.type = type;
+    this.onScoreUp = onScoreUp;
     // this.window = document.createElement("div");
     this.window = this.createWindow();
     // this.window.className = "popup-window";
@@ -24,39 +24,12 @@ export class PopUpWindowBase {
   }
 }
 
-export class PopUpWindow extends PopUpWindowBase {
-  constructor(x, y, type) {
-    super(x, y, type);
-  }
-
-  createWindow() {
-    const element = document.createElement("div");
-    element.className = "popup-window";
-
-    Object.assign(element.style, {
-      position: "absolute",
-      width: "200px",
-      height: "150px",
-      backgroundColor: "lightblue",
-      border: "1px solid black",
-      borderRadius: "10px",
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    });
-
-    return element;
-  }
-
-  update() {}
-}
-
 export class MovingPopUpWindow extends PopUpWindowBase {
-  constructor(x, y, type) {
-    super(x, y, type);
+  constructor(x, y, onScoreUp) {
+    super(x, y, onScoreUp);
     this.speed = 5; // Default speed
     this.direction = Math.random() * Math.PI * 2; // Random direction in radians
+    this.disappeared = false;
   }
 
   setSpeed(speed) {
@@ -68,8 +41,16 @@ export class MovingPopUpWindow extends PopUpWindowBase {
     return this;
   }
 
+  get dom() {
+    return this.window;
+  }
+
   createWindow() {
     const element = document.createElement("div");
+    element.onclick = () => {
+      this.onScoreUp()
+      this.disappeared = true;
+    };
     element.className = "popup-window";
 
     Object.assign(element.style, {

@@ -61,6 +61,5 @@ function StartPageContentRoot(props) {
 const Start = {
     handler: StartPageHandler,
     content: StartPageContentRoot,
-    postRendering: () => {},
 }
 export default Start;

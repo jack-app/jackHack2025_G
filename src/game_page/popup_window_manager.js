@@ -1,68 +1,65 @@
-import { PopUpWindow, MovingPopUpWindow } from "./popup_window";
+import { framerate } from "./const";
 
-export class PopUpWindowManager {
-  constructor(gameSetup, popUpFactory) {
+export default class PopUpWindowManager {
+  constructor(popupContainer, popUpFactory) {
     this.windows = [];
-    this.createInterval = null;
-    this.updateInterval = null;
+    this.frameInterval = null;
 
-    // Frame rates in milliseconds (default: 2000ms for creation, 1000ms for updates)
-    this.createFrameRate = gameSetup.createFrameRate ?? 2000;
-    this.updateFrameRate = 50; // 20 Hz
-    this.popUpContainer = document.getElementById("game-window");
+    this.windowCountListeners = [];
+    this.scoreUpListeners = [];
+
+    this.popUpContainer = popupContainer;
     this.popUpFactory = popUpFactory;
+
+    this.lastPopUpTrigger = null;
   }
 
-  createNewWindow() {
-     if ( this.windows.length < 10 ) {
+  addWindowCountListener(listener) {
+    this.windowCountListeners.push(listener);
+  }
 
-        const x = Math.random() * (window.innerWidth - 200);
-        const y = Math.random() * (window.innerHeight - 150);
-        const isMoving = Math.random() > 0.5;
+  addScoreUpListener(listener) {
+    this.scoreUpListeners.push(listener);
+  }
 
-        const newWindow = isMoving
-        ? new MovingPopUpWindow(x, y, "default")
-        .setSpeed(100 / this.updateFrameRate)
-        .setDirection(Math.random() * Math.PI * 2)
-        : new PopUpWindow(x, y, "default");
+  onScoreUp() {
+    this.scoreUpListeners.forEach((listener) => listener());
+  }
 
-        // const newWindow = new PopUpWindow(x, y, "default");
-        console.log(newWindow);
+  triggerWindowPopup() {
+    let elapsed = null;
+    if (this.lastPopUpTrigger) {
+      elapsed = Date.now() - this.lastPopUpTrigger; // in milliseconds
+    }
+    const newWindows = this.popUpFactory.arrayOfNewWindows(() => this.onScoreUp(), elapsed);
+    newWindows.forEach((newWindow) => {
+      this.popUpContainer.appendChild(newWindow.dom);
+      this.windows.push(newWindow);
+    });
+    this.lastPopUpTrigger = Date.now();
+  }
 
-        this.popUpContainer.appendChild(newWindow.window);
-        this.windows.push(newWindow);
-      }
+  cleanUp() {
+    this.windows = this.windows.filter((win) => !win.disappeared);
   }
 
   start() {
-    // Create new windows periodically
-    this.createInterval = setInterval(() => {
-      this.createNewWindow();
-    }, this.createFrameRate);
-
-    // Update moving windows
-    this.updateInterval = setInterval(() => {
+    this.frameInterval = setInterval(() => {
+      this.triggerWindowPopup();
       this.windows.forEach((win) => win.update());
-    }, this.updateFrameRate);
+      this.cleanUp();
+      this.windowCountListeners.forEach((listener) => listener(this.windows.length));
+    }, framerate);
   }
 
   stop() {
-    if (this.createInterval) {
-      clearInterval(this.createInterval);
-      this.createInterval = null;
-    }
-
-    if (this.updateInterval) {
-      clearInterval(this.updateInterval);
-      this.updateInterval = null;
+    if (this.frameInterval) {
+      clearInterval(this.frameInterval);
+      this.frameInterval = null;
     }
 
     // Clean up windows
-    this.windows.forEach((win) => {
-      if (win.window.parentNode) {
-        win.window.parentNode.removeChild(win.window);
-      }
-    });
+    this.popUpContainer.replaceChildren();
     this.windows = [];
   }
 }

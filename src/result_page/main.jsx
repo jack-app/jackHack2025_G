@@ -22,26 +22,13 @@ class ResultPageHandler {
     }
 }
 
-function postRendering() {
-    const resultBg = document.getElementById("resultbackground");
-    
-    if (resultBg) {
-        if (Math.random() < 0.05) {
-            resultBg.style.backgroundColor = "rgb(250, 3, 3)";
-        } else {
-            resultBg.style.backgroundColor = "rgb(64, 28, 192)";
-        }
-    }
-}
-
 function ResultPageContentRoot(props) {
-
     const score = props.handler.gameResult.score
     const user_name = props.handler.gameSetup.username 
     const audio = new Audio('./src/result_page/erro.mp3')
     audio.play()
 
-    return <div id="resultbackground">
+    const content = <div id="resultbackground">
     <br/>
     <p> A problem has been detected and windows has been shut down to prevent damage to your computer
     <br/><br/>
@@ -68,13 +55,19 @@ function ResultPageContentRoot(props) {
     Physical memory dump complete.<br/>
     Contact your system administrator or technical support group for furtherassistance.</p>
         <button onClick={() => props.handler.confirmResult()}>Restart</button>
-        
     </div>
+
+    if (Math.random() < 0.05) {
+        content.style.backgroundColor = "rgb(250, 3, 3)";
+    } else {
+        content.style.backgroundColor = "rgb(64, 28, 192)";
+    }
+
+    return content;
 }
 
 const Result = {
     handler: ResultPageHandler,
-    content: ResultPageContentRoot,
-    postRendering: postRendering
+    content: ResultPageContentRoot
 }
 export default Result;

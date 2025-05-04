@@ -4,13 +4,13 @@ import './index.css'
 import { GameSetUp } from './messengers.js'
 import Start from './start_page/main.jsx'
 
-import GamePage from './game_page/main.jsx'
-import { GamePageHandler } from './game_page/main.js'
-import { PopUpWindowManager } from './game_page/popup_window_manager.js'
+import Game from './game_page/main.jsx'
 
 import Result from './result_page/main.jsx'
+import PopUpWindowManager from './game_page/popup_window_manager.js'
+import PopUpWindowFactory from './game_page/popup_window_factory.js'
 
-class Game {
+class App {
   constructor(rootElement) {
     this.root = rootElement
   }
@@ -35,15 +35,26 @@ class Game {
   async showStartPage(game_setup) {
     const start_page_handler = new Start.handler(game_setup)
     this.render(Start.content({ handler: start_page_handler }))
-    Start.postRendering()
+
     await start_page_handler.waitForGameStart()
     return start_page_handler.gameSetup
   }
 
   async runGame(game_setup) {
-    const game_page_handler = new GamePageHandler(game_setup)
-    this.render(<GamePage handler={game_page_handler}/>)
-    const popup_window_manager = new PopUpWindowManager(game_setup)
+    const game_page_handler = new Game.handler(game_setup)
+    const game_page_content = Game.content({ handler: game_page_handler })
+    this.render(game_page_content)
+
+    const popup_window_manager = game_page_handler.popUpWindowManager
+    popup_window_manager.addWindowCountListener((count) => {
+      if (count > game_setup.maxWindowCount) {
+        game_page_handler.endGame()
+      }
+    })
+    popup_window_manager.addScoreUpListener(() => {
+      game_page_handler.gameResult.score += 1
+    })
+
     popup_window_manager.start()
     await game_page_handler.waitForGameEnd()
     popup_window_manager.stop()
@@ -53,12 +64,12 @@ class Game {
   async showResultPage(game_setup, game_result) {
     const result_page_handler = new Result.handler(game_result, game_setup)
     this.render(Result.content({ handler: result_page_handler }))
-    Result.postRendering()
+
     await result_page_handler.waitForComfirmation()
   }
 }
 
 const rootElement = document.getElementById('root')
-const game = new Game(rootElement)
+const app = new App(rootElement)
 
-game.launchMainLoop()
+app.launchMainLoop()
