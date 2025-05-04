@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import { GameController } from "../game-vanilla/GameController";
 import './main.css';
+import { GameController } from "../game-kanva/GameController";
 
 function GamePage(props) {
   const managerRef = useRef(null);
