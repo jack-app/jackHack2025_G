@@ -1,4 +1,6 @@
 import './main.css';
+import React, { useEffect } from 'react';
+
 
 
 function ResultPage(props) {
@@ -7,6 +9,19 @@ function ResultPage(props) {
     const user_name = props.handler.gameSetup.username 
     const audio = new Audio('./src/result_page/erro.mp3')
     audio.play()
+
+    useEffect(() => {
+        const resultBg = document.getElementById("resultbackground");
+        if (resultBg) {
+            if (Math.random() < 0.05) {
+                resultBg.style.backgroundColor = "rgb(250, 3, 3)";
+            } else {
+                resultBg.style.backgroundColor = "rgb(64, 28, 192)";
+            }
+        }
+    }, []); // 初回描画後に1回だけ実行される
+
+
 
     return <>
         <div id="resultbackground">
