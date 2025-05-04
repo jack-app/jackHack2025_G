@@ -1,8 +1,10 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  base: 'https://jack-app.github.io/jackHack2025_G/'
+  base: 'https://jack-app.github.io/jackHack2025_G/',
+  esbuild: {
+    jsxFactory: 'h',
+    jsxFragment: 'Fragment'
+  },
 })
