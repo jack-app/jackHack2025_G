@@ -1,15 +1,16 @@
 import React from "react";
-
+import { createRoot } from "react-dom/client";
+import "./popup_window.css";
 export class PopUpWindowBase {
   // x, y : from top-left of GameWindow
   // type : type of popup window
 
-  constructor(x, y, type) {
+  constructor(x, y, type, onclick) {
     this.x = x;
     this.y = y;
     this.type = type;
     // this.window = document.createElement("div");
-    this.window = this.createWindow();
+    this.window = this.createWindow(onclick);
     // this.window.className = "popup-window";
     this.window.style.left = `${x}px`;
     this.window.style.top = `${y}px`;
@@ -27,28 +28,35 @@ export class PopUpWindowBase {
 }
 
 export class PopUpWindow extends PopUpWindowBase {
-  constructor(x, y, type) {
-    super(x, y, type);
+  constructor(x, y, type, onclick) {
+    super(x, y, type, onclick);
   }
 
-  createWindow() {
-    const element = document.createElement("div");
-    element.className = "popup-window";
+  createWindow(onclick) {
+    const container = document.createElement("div");
+    const root = createRoot(container);
+    root.render(
+      <div className="popup-window">
+        <h1>Popup Window</h1>
+        <p>This is a popup window.</p>
+        <button
+          onClick={() => {
+            console.log("Button clicked");
+            if (onclick) {
+              onclick();
+            }
+          }}
+        >
+          Click Me
+        </button>
+      </div>
+    );
 
-    Object.assign(element.style, {
-      position: "absolute",
-      width: "200px",
-      height: "150px",
-      backgroundColor: "lightblue",
-      border: "1px solid black",
-      borderRadius: "10px",
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    });
+    container.style.position = "absolute";
+    container.style.left = `${this.x}px`;
+    container.style.top = `${this.y}px`;
 
-    return element;
+    return container;
   }
 
   update() {}

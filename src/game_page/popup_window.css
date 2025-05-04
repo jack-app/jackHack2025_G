@@ -1,0 +1,12 @@
+.popup-window {
+  position: "absolute";
+  width: "200px";
+  height: "150px";
+  background-color: "lightblue";
+  border: "1px solid black";
+  border-radius: "10px";
+  box-shadow: "0 4px 8px rgba(0, 0, 0, 0.2)";
+  display: "flex";
+  justify-content: "center";
+  align-items: "center";
+}

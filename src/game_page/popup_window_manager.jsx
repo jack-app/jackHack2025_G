@@ -1,8 +1,10 @@
 import { PopUpWindow, MovingPopUpWindow } from "./popup_window";
+import { GameResult } from "../messengers";
 
 export class PopUpWindowManager {
   constructor(options = {}) {
     this.windows = [];
+    this.gameResult = new GameResult();
     this.createInterval = null;
     this.updateInterval = null;
 
@@ -21,25 +23,34 @@ export class PopUpWindowManager {
     return this.updateFrameRate;
   }
 
+  countUp() {
+    this.gameResult.score += 1;
+    console.log("Score: ", this.gameResult.score);
+  }
+
   createNewWindow() {
-     if ( this.windows.length < 10 ) {
+    if (this.windows.length < 10) {
+      const x = Math.random() * (window.innerWidth - 200);
+      const y = Math.random() * (window.innerHeight - 150);
+      // const isMoving = Math.random() > 0.5;
 
-        const x = Math.random() * (window.innerWidth - 200);
-        const y = Math.random() * (window.innerHeight - 150);
-        const isMoving = Math.random() > 0.5;
+      // const newWindow = isMoving
+      // ? new MovingPopUpWindow(x, y, "default")
+      // .setSpeed(100 / this.updateFrameRate)
+      // .setDirection(Math.random() * Math.PI * 2)
+      // : new PopUpWindow(x, y, "default");
 
-        const newWindow = isMoving
-        ? new MovingPopUpWindow(x, y, "default")
-        .setSpeed(100 / this.updateFrameRate)
-        .setDirection(Math.random() * Math.PI * 2)
-        : new PopUpWindow(x, y, "default");
+      const newWindow = new PopUpWindow(
+        x,
+        y,
+        "default",
+        this.countUp.bind(this)
+      );
+      console.log(newWindow);
 
-        // const newWindow = new PopUpWindow(x, y, "default");
-        console.log(newWindow);
-
-        this.element.appendChild(newWindow.window);
-        this.windows.push(newWindow);
-      }
+      this.element.appendChild(newWindow.window);
+      this.windows.push(newWindow);
+    }
   }
 
   start() {
