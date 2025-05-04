@@ -5,6 +5,7 @@ import PopUpWindowFactory from './popup_window_factory';
 import PopUpWindowManager from "./popup_window_manager";
 
 import './main.css';
+import { GameController } from "../game-pixijs/GameController";
 
 export class GamePageHandler {
   constructor(gameSetup) {

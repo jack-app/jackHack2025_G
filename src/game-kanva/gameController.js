@@ -1,4 +1,5 @@
 import { PopUpWindows } from "./popUpWindows";
+import Konva from "konva";
 
 export class GameController {
    constructor( options = {} ) {
@@ -9,16 +10,25 @@ export class GameController {
       this.createFrameRate = options.createFrameRate ?? 2000;
       this.updateFrameRate = options.updateFrameRate ?? 50; // 20 Hz
       this.elementId = options.elementId ?? "game-window";
+      this.width = window.innerWidth;
+      this.height = window.innerHeight;
 
-      this.element = document.getElementById( this.elementId );
+      this.stage = new Konva.Stage( {
+         container: this.elementId,
+         width: this.width,
+         height: this.height,
+      } );
+      this.layer = new Konva.Layer();
+      this.stage.add( this.layer );
+
       this.windows = [];
    }
 
    createNewWindow() {
       if ( this.windows.length < 10 ) {
-         const newWindow = new PopUpWindows( this.element );
+         const newWindow = new PopUpWindows( this.width, this.height );
          this.windows.push( newWindow );
-         this.element.appendChild( newWindow.window );
+         this.layer.add( newWindow.window );
       }
    }
 
@@ -29,9 +39,13 @@ export class GameController {
       }, this.createFrameRate );
 
       // Update moving windows
-      this.updateInterval = setInterval( () => {
+      const anim = new Konva.Animation( () => {
          this.windows.forEach( ( win ) => win.update() );
-      }, this.updateFrameRate );
+      }, this.layer );
+      anim.start();
+      // this.updateInterval = setInterval( () => {
+      //    this.windows.forEach( ( win ) => win.update() );
+      // }, this.updateFrameRate );
    }
 
    stop() {
@@ -40,10 +54,10 @@ export class GameController {
          this.createInterval = null;
       }
 
-      if ( this.updateInterval ) {
-         clearInterval( this.updateInterval );
-         this.updateInterval = null;
-      }
+      // if ( this.updateInterval ) {
+      //    clearInterval( this.updateInterval );
+      //    this.updateInterval = null;
+      // }
       this.windows.forEach( ( win ) => {
          if ( win.window.parentNode ) {
             win.window.parentNode.removeChild( win.window );
