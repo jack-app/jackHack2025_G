@@ -2,9 +2,6 @@
     position: relative;
     width: 100%;
     height: 64px;
-    border-radius: 5px;
-    border: 2px solid yellow;
-    background-color: blue;
     p {
         margin: 0;
     }
@@ -13,16 +10,20 @@
         height: 50px;
         margin: 5px;
         border-radius: 5px;
-        background-color: red;
-        border: 2px solid yellow;
+        background-color: white;
+        border: 2px solid rgb(238, 203, 47);
     }
     .display-box {
         position: absolute;
         left: 0;
         top: 0;
-        width: 200px;
-        height: 60px;
-        
+        width: 300px;
+        height: 64px;
+
+        border-radius: 1px;
+        border: 1px solid white;
+        background-color: rgb(47, 47, 205);
+        mask-image: linear-gradient(to right, white, 80%, transparent);
         display: flex;
         align-content: center;
         flex-direction: row;
