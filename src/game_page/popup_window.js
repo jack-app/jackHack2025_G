@@ -1,5 +1,3 @@
-import React from "react";
-
 export class PopUpWindowBase {
   // x, y : from top-left of GameWindow
   // type : type of popup window
