@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { PopUpWindowManager } from "./popup_window_manager";
+import './main.css';
 
 function GamePage(props) {
   const managerRef = useRef(null);
@@ -22,9 +23,10 @@ function GamePage(props) {
 
   return (
     <>
-      <h1>GamePage</h1>
-      <div id="game-window" />
+      <div id="game-page-container">
+      <div id="game-window"></div>
       <button onClick={() => props.handler.endGame()}>End Game</button>
+      </div>
     </>
   );
 }
