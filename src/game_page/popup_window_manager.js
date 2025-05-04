@@ -22,21 +22,24 @@ export class PopUpWindowManager {
   }
 
   createNewWindow() {
-    const x = Math.random() * (window.innerWidth - 200);
-    const y = Math.random() * (window.innerHeight - 150);
-    const isMoving = Math.random() > 0.5;
+     if ( this.windows.length < 10 ) {
 
-    const newWindow = isMoving
-      ? new MovingPopUpWindow(x, y, "default")
-          .setSpeed(100 / this.updateFrameRate)
-          .setDirection(Math.random() * Math.PI * 2)
-      : new PopUpWindow(x, y, "default");
+        const x = Math.random() * (window.innerWidth - 200);
+        const y = Math.random() * (window.innerHeight - 150);
+        const isMoving = Math.random() > 0.5;
 
-    // const newWindow = new PopUpWindow(x, y, "default");
-    console.log(newWindow);
+        const newWindow = isMoving
+        ? new MovingPopUpWindow(x, y, "default")
+        .setSpeed(100 / this.updateFrameRate)
+        .setDirection(Math.random() * Math.PI * 2)
+        : new PopUpWindow(x, y, "default");
 
-    this.element.appendChild(newWindow.window);
-    this.windows.push(newWindow);
+        // const newWindow = new PopUpWindow(x, y, "default");
+        console.log(newWindow);
+
+        this.element.appendChild(newWindow.window);
+        this.windows.push(newWindow);
+      }
   }
 
   start() {

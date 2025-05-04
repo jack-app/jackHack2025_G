@@ -1,0 +1,53 @@
+#start-body-right>.user-select-area {
+    position: relative;
+    width: 100%;
+    height: 64px;
+    border-radius: 5px;
+    border: 2px solid yellow;
+    background-color: blue;
+    p {
+        margin: 0;
+    }
+    .user-icon {
+        width: 50px;
+        height: 50px;
+        margin: 5px;
+        border-radius: 5px;
+        background-color: red;
+        border: 2px solid yellow;
+    }
+    .display-box {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 200px;
+        height: 60px;
+        
+        display: flex;
+        align-content: center;
+        flex-direction: row;
+    }
+    .input-box{
+        position: absolute;
+        left: 65px;
+        top: 53px;
+        width: 15em;
+        height: 20px;
+
+        display: flex;
+        flex-direction: row;
+
+        input {
+            background-color: white;
+            border: 1.5px solid lightblue;
+            border-radius: 3px;
+        }
+
+        img {
+            height: 20px;
+            width: 20px;
+            background-color: green;
+            margin-left: 10px;
+        }
+    }
+}
