@@ -28,7 +28,7 @@ function StartPage(props) {
                             props.handler.difficultyUpdate(element.target.value)
                             setDifficulty(element.target.value)
                         }} 
-                        type="radio" name="difficulty" value="easy"
+                        type="radio" name="difficulty" value="easy" id="easy"
                         checked={difficulty === "easy"}
                     />
                     easy
@@ -39,7 +39,7 @@ function StartPage(props) {
                             props.handler.difficultyUpdate(element.target.value)
                             setDifficulty(element.target.value)
                         }} 
-                        type="radio" name="difficulty" value="normal"
+                        type="radio" name="difficulty" value="normal" id="normal"
                         checked={difficulty === "normal"}
                     />
                     normal
@@ -50,7 +50,7 @@ function StartPage(props) {
                             props.handler.difficultyUpdate(element.target.value)
                             setDifficulty(element.target.value)
                         }} 
-                        type="radio" name="difficulty" value="hard"
+                        type="radio" name="difficulty" value="hard" id="hard"
                         checked={difficulty === "hard"}
                     />
                     hard
