@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./main.css"
+import windows_logo from "./windows.jpg" 
 import "./user-select-area.css"
 import button_image from "./button-dummy.png"
 
@@ -12,8 +13,10 @@ function StartPage(props) {
 
         <div id="start-body">
             <div id="start-body-left">
-                <h1>windows x<br />explain</h1>
+                <img src={windows_logo} id="windows-logo" alt="windows logo" />
+                <p>explain</p>
             </div>
+            <div id="start-body-middle-line"></div>
             <div id="start-body-right">
                 <div className="user-select-area">
                     <div className="display-box">
@@ -30,6 +33,8 @@ function StartPage(props) {
                 </div>
             </div>
         </div>
+
+       
 
         <div id="start-body-bottom-line"></div>
 

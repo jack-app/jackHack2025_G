@@ -12,7 +12,7 @@
 
 #start-body-up-line {
     height: 1px;
-    background: radial-gradient(at 0 2%, white 1%, rgb(123,141,214) 99%);
+    background: radial-gradient(at 0 2%, white 1%, rgb(93, 120, 226) 99%);
 }
 
 #start-body {
@@ -22,24 +22,34 @@
         width: 50%;
         height: 100%;
         display: flex;
-        align-items: center;
-        justify-content: end;
-        background: linear-gradient(-20deg, rgb(123,141,214) 80%, white );
+        align-items: end;
+        justify-content: center;
+        flex-direction: column;
+        font-size: xx-large;
+        color: white;
+        background: linear-gradient(-20deg, rgb(93, 120, 226) 80%, white );
+    }
+    #start-body-middle-line {
+        width: 1px;
+        background: radial-gradient(at 0 50%, rgb(202, 206, 226) 0, rgb(93, 120, 226) 100%);
     }
     #start-body-right {
         width: 50%;
         height: 100%;
         display: flex;
         align-items: center;
-        background-color: rgb(123,141,214);
+        background-color: rgb(93, 120, 226);
     }
+    #windows-logo {
+        height: 5em;
+    }
+    
     flex: 1;
 }
 
 #start-body-bottom-line {
     height: 2px;
-    background: radial-gradient(at 0 30%, orange 1%, rgb(123,141,214) 99%);
-
+    background: radial-gradient(at 0 30%, orange 1%, rgb(93, 120, 226) 99%);
 }
 
 #start-footer {
