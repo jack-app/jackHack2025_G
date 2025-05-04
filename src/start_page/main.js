@@ -4,6 +4,8 @@ export class StartPageHandler {
     constructor(gameSetup) {
         this.gameSetup = gameSetup ?? new GameSetUp()
         this.watingGameStart = []
+        this.username = ""
+        this.difficulty="normal"
     }
 
     waitForGameStart() {
@@ -17,4 +19,12 @@ export class StartPageHandler {
         this.watingGameStart.forEach((resolve) => resolve())
         this.watingGameStart = []
     }
+
+    userNameUpdate(username) {
+         this.username=username
+    }
+
+    difficultyUpdate(difficulty) {
+        this.difficulty = difficulty
+   }
 }
