@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { h, Fragment } from 'start-dom-jsx' // JSXを使うためのおまじない
 import "./main.css"
 import windows_logo from "./windows.jpg" 
 import "./user-select-area.css"
 import button_image from "./button-dummy.png"
 
-function StartPage(props) {
-    const [difficulty, setDifficulty] = useState("normal")
+export function content(props) {
     return <div id="start-page-container">
         <div id="start-header"></div>
 
@@ -27,14 +26,12 @@ function StartPage(props) {
                         </div>
                     </div>
                     <div className="input-box">
-                        <input onChange={(element) => props.handler.userNameUpdate(element.target.value)}/>
+                        <input onChange={(element) => props.handler.updateUserName(element.target.value)}/>
                         <img src={button_image} onClick={() => props.handler.startGame()}/>
                     </div>
                 </div>
             </div>
         </div>
-
-       
 
         <div id="start-body-bottom-line"></div>
 
@@ -42,34 +39,29 @@ function StartPage(props) {
             <div id="difficulty_selector">
                 <label>
                     <input 
-                        onChange={(element) => {
-                            props.handler.difficultyUpdate(element.target.value)
-                            setDifficulty(element.target.value)
-                        }} 
+                        onChange={(element) => 
+                            props.handler.updateDifficulty(element.target.value)
+                        } 
                         type="radio" name="difficulty" value="easy" id="easy"
-                        checked={difficulty === "easy"}
                     />
                     easy
                 </label>
                 <label>
                     <input 
-                        onChange={(element) => {
-                            props.handler.difficultyUpdate(element.target.value)
-                            setDifficulty(element.target.value)
-                        }} 
+                        onChange={(element) => 
+                            props.handler.updateDifficulty(element.target.value)
+                        } 
                         type="radio" name="difficulty" value="normal" id="normal"
-                        checked={difficulty === "normal"}
+                        checked
                     />
                     normal
                 </label>
                 <label>
                     <input 
-                        onChange={(element) => {
-                            props.handler.difficultyUpdate(element.target.value)
-                            setDifficulty(element.target.value)
-                        }} 
+                        onChange={(element) => 
+                            props.handler.updateDifficulty(element.target.value)
+                        } 
                         type="radio" name="difficulty" value="hard" id="hard"
-                        checked={difficulty === "hard"}
                     />
                     hard
                 </label>
@@ -77,4 +69,3 @@ function StartPage(props) {
         </div>   
     </div>
 }
-export default StartPage;

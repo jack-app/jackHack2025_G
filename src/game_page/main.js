@@ -1,4 +1,5 @@
 import { GameSetUp, GameResult } from "../messengers";
+import { PopUpWindowManager } from "./popup_window_manager";
 
 export class GamePageHandler {
     constructor(gameSetup) {

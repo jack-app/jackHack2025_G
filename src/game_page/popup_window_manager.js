@@ -1,24 +1,16 @@
 import { PopUpWindow, MovingPopUpWindow } from "./popup_window";
 
 export class PopUpWindowManager {
-  constructor(options = {}) {
+  constructor(gameSetup, popUpFactory) {
     this.windows = [];
     this.createInterval = null;
     this.updateInterval = null;
 
     // Frame rates in milliseconds (default: 2000ms for creation, 1000ms for updates)
-    this.createFrameRate = options.createFrameRate ?? 2000;
-    this.updateFrameRate = options.updateFrameRate ?? 50; // 20 Hz
-    this.elementId = options.elementId ?? "game-window";
-    this.element = document.getElementById(this.elementId);
-  }
-
-  getCreateFrameRate() {
-    return this.createFrameRate;
-  }
-
-  getUpdateFrameRate() {
-    return this.updateFrameRate;
+    this.createFrameRate = gameSetup.createFrameRate ?? 2000;
+    this.updateFrameRate = 50; // 20 Hz
+    this.popUpContainer = document.getElementById("game-window");
+    this.popUpFactory = popUpFactory;
   }
 
   createNewWindow() {
@@ -37,17 +29,12 @@ export class PopUpWindowManager {
         // const newWindow = new PopUpWindow(x, y, "default");
         console.log(newWindow);
 
-        this.element.appendChild(newWindow.window);
+        this.popUpContainer.appendChild(newWindow.window);
         this.windows.push(newWindow);
       }
   }
 
   start() {
-    // Create initial windows
-    // for (let i = 0; i < 3; i++) {
-    //   this.createNewWindow();
-    // }
-
     // Create new windows periodically
     this.createInterval = setInterval(() => {
       this.createNewWindow();
@@ -79,23 +66,3 @@ export class PopUpWindowManager {
     this.windows = [];
   }
 }
-
-// class Game {
-//   constructor() {
-//     this.popupmanager = new PopUpWindowManager({
-//       createFrameRate: 2000,
-//       updateFrameRate: 50,
-//       elementId: "game-window",
-//     });
-//   }
-
-//   start() {
-//     // Initialize and start the game
-//     this.popupmanager.start();
-//   }
-
-//   end() {
-//     // End the game
-//     this.popupmanager.stop();
-//   }
-// }

@@ -19,11 +19,11 @@ export class StartPageHandler {
         this.watingGameStart = []
     }
 
-    userNameUpdate(username) {
-         this.gameSetup.username=username
+    updateUserName(username) {
+         this.gameSetup.username = username
     }
 
-    difficultyUpdate(difficulty) {
+    updateDifficulty(difficulty) {
         this.gameSetup.difficulty = difficulty
    }
 }
