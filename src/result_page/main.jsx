@@ -1,7 +1,28 @@
 import { h, Fragment } from 'start-dom-jsx' // JSXを使うためのおまじない
 import './main.css';
 
-export function postRendering() {
+class ResultPageHandler {
+    constructor(gameResult,gameSetup) {
+        this.gameResult = gameResult;
+        this.gameSetup = gameSetup;
+        this.watingGameComfirmation = [];
+
+    }
+
+    waitForComfirmation() {
+        // resolveが呼ばれるまで待機する．resolveはconfirmResultが呼ばれたときに呼ばれる
+        return new Promise((resolve) => {
+            this.watingGameComfirmation.push(resolve);
+        });
+    }
+
+    confirmResult() {
+        this.watingGameComfirmation.forEach((resolve) => resolve());
+        this.watingGameComfirmation = [];
+    }
+}
+
+function postRendering() {
     const resultBg = document.getElementById("resultbackground");
     
     if (resultBg) {
@@ -13,7 +34,7 @@ export function postRendering() {
     }
 }
 
-export function content(props) {
+function ResultPageContentRoot(props) {
 
     const score = props.handler.gameResult.score
     const user_name = props.handler.gameSetup.username 
@@ -50,3 +71,10 @@ export function content(props) {
         
     </div>
 }
+
+const Result = {
+    handler: ResultPageHandler,
+    content: ResultPageContentRoot,
+    postRendering: postRendering
+}
+export default Result;
