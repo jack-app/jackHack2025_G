@@ -1,5 +1,5 @@
+import { Application } from "pixi.js";
 import { PopUpWindows } from "./popUpWindows";
-import Konva from "konva";
 
 export class GameController {
    constructor( options = {} ) {
@@ -12,47 +12,46 @@ export class GameController {
       this.elementId = options.elementId ?? "game-window";
       this.width = window.innerWidth;
       this.height = window.innerHeight;
-
-      this.stage = new Konva.Stage( {
-         container: this.elementId,
+      this.windows = [];
+      this.element = document.getElementById( this.elementId );
+      this.app = new Application();
+      this.app.init( {
          width: this.width,
          height: this.height,
+         backgroundAlpha: 0,
+      } ).then( () => {
+         this.element.appendChild( this.app.canvas );
+         this.start();
       } );
-      this.layer = new Konva.Layer();
-      this.stage.add( this.layer );
-
-      this.windows = [];
    }
 
    createNewWindow() {
       if ( this.windows.length < 10 ) {
          const newWindow = new PopUpWindows( this.width, this.height );
          this.windows.push( newWindow );
-         this.layer.add( newWindow.window );
+         this.app.stage.addChild( newWindow.window );
       }
    }
 
    start() {
       // Create new windows periodically
-      this.createInterval = setInterval( () => {
-         this.createNewWindow();
-      }, this.createFrameRate );
+      let elapsedTime = 0;
+      this.app.ticker.add( ( time ) => {
+         elapsedTime += time.elapsedMS;
+         if ( elapsedTime > this.createFrameRate ) {
+            elapsedTime -= this.createFrameRate;
+            this.createNewWindow();
+         }
+      } );
 
       // Update moving windows
-      const anim = new Konva.Animation( () => {
+      this.app.ticker.add( () => {
          this.windows.forEach( ( win ) => win.update() );
-      }, this.layer );
-      anim.start();
-      // this.updateInterval = setInterval( () => {
-      //    this.windows.forEach( ( win ) => win.update() );
-      // }, this.updateFrameRate );
+      } );
+      this.app.start();
    }
 
    stop() {
-      if ( this.createInterval ) {
-         clearInterval( this.createInterval );
-         this.createInterval = null;
-      }
 
       // if ( this.updateInterval ) {
       //    clearInterval( this.updateInterval );
@@ -63,8 +62,6 @@ export class GameController {
             win.window.parentNode.removeChild( win.window );
          }
       } );
-
-
       this.windows = [];
    }
 }

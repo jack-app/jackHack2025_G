@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import './main.css';
-import { GameController } from "../game-kanva/GameController";
+import { GameController } from "../game-pixijs/GameController";
 
 function GamePage(props) {
   const managerRef = useRef(null);
@@ -11,7 +11,6 @@ function GamePage(props) {
       updateFrameRate: 50,
       elementId: "game-window",
     });
-    managerRef.current.start();
 
     return () => {
       // Cleanup when component unmounts

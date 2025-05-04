@@ -11,7 +11,6 @@ export class GameController {
       this.elementId = options.elementId ?? "game-window";
 
       this.element = document.getElementById( this.elementId );
-      console.log( 'this.element', this.element );
       this.windows = [];
    }
 
