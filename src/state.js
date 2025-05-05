@@ -1,5 +1,4 @@
 import { configureStore, createListenerMiddleware, createSlice } from "@reduxjs/toolkit";
-import subscribeMiddleware from "redux-subscribe";
 
 // interface GameState {
 //    difficulty: number; // 難易度

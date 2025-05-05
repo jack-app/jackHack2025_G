@@ -4,10 +4,7 @@ export class SkillBase {
    constructor( name ) { // skill_item = skillのICONなるDOM
       this.name = name;
       this.active = false; // スキルが発動中かどうか
-   }
-
-   get dom() {
-      throw new Error( "getter of dom not implemented in SkillBase" );
+      this.dom = <SkillItem onClick={ this.onClick.bind( this ) } />
    }
 
    update() {
