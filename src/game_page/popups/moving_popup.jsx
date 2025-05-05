@@ -1,5 +1,6 @@
 import { h, Fragment } from 'start-dom-jsx' // JSXを使うためのおまじない
 import { PopUpWindowBase, PopUpWindowDOM } from "./popup_window_base";
+import { defaultWindowHeight, defaultWindowWidth } from './const';
 
 export default function movingPopUpFactory({onScoreUp, parent, framerate}) {
   return new MovingPopUp(parent, onScoreUp, framerate);
@@ -7,7 +8,7 @@ export default function movingPopUpFactory({onScoreUp, parent, framerate}) {
 
 class MovingPopUp extends PopUpWindowBase {
   constructor(parent, onScoreUp, framerate) {
-    super(parent, 200, 150, onScoreUp);
+    super(parent, defaultWindowWidth, defaultWindowHeight, onScoreUp);
     this.parents = parent
     this.speed = 100 / framerate; // 100px / second
     this.direction = Math.random() * 2 * Math.PI; // 0 to 2π
