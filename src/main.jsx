@@ -1,57 +1,61 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { h, Fragment } from 'start-dom-jsx' // JSXを使うためのおまじない
 import './index.css'
 
-import StartPage from './start_page/main.jsx'
-import GamePage from './game_page/main.jsx'
-import ResultPage from './result_page/main.jsx'
-import { StartPageHandler } from './start_page/main.js'
-import { GamePageHandler } from './game_page/main.js'
 import { GameSetUp } from './messengers.js'
-import { ResultPageHandler } from './result_page/main.js'
+import Start from './start_page/main.jsx'
 
-class Game {
+import Game from './game_page/main.jsx'
+
+import Result from './result_page/main.jsx'
+
+class App {
   constructor(rootElement) {
-    this.root = createRoot(rootElement)
+    this.root = rootElement
   }
 
   render(component) {
-    this.root.render(<StrictMode>{component}</StrictMode>)
+    this.root.replaceChildren(component)
   }
 
   async launchMainLoop() {
-    let game_setup = new GameSetUp()
-    let start_page_handler;
-    let game_page_handler;
     let game_result;
-    let result_page_handler;
+    let game_setup = new GameSetUp()
     while(true) { // メインループ
       // スタートページ
-      start_page_handler = new StartPageHandler(game_setup)
-      this.render(<StartPage handler={start_page_handler}/>)
-      await start_page_handler.waitForGameStart()
-      game_setup = start_page_handler.gameSetup
-
+      game_setup = await this.showStartPage(game_setup)
       // ゲームページ
-      game_page_handler = new GamePageHandler(game_setup)
-      this.render(<GamePage handler={game_page_handler}/>)
-      this.run(game_page_handler)
-      await game_page_handler.waitForGameEnd()
-      game_result = game_page_handler.gameResult
-
+      game_result = await this.runGame(game_setup)
       // 結果ページ
-      result_page_handler = new ResultPageHandler(game_result,game_setup)
-      this.render(<ResultPage handler={result_page_handler}/>)
-      await result_page_handler.waitForComfirmation()
+      await this.showResultPage(game_setup, game_result)
     }
   }
 
-  async run(game_page_handler) {
-    // ゲーム本体の実行
+  async showStartPage(game_setup) {
+    const start_page_handler = new Start.handler(game_setup)
+    this.render(Start.content({ handler: start_page_handler }))
+
+    await start_page_handler.waitForGameStart()
+    return start_page_handler.gameSetup
+  }
+
+  async runGame(game_setup) {
+    const game_page_handler = new Game.handler(game_setup)
+    const game_page_content = Game.content({ handler: game_page_handler })
+    this.render(game_page_content)
+    await game_page_handler.waitForGameEnd()
+
+    return game_page_handler.gameResult
+  }
+
+  async showResultPage(game_setup, game_result) {
+    const result_page_handler = new Result.handler(game_result, game_setup)
+    this.render(Result.content({ handler: result_page_handler }))
+
+    await result_page_handler.waitForComfirmation()
   }
 }
 
 const rootElement = document.getElementById('root')
-const game = new Game(rootElement)
+const app = new App(rootElement)
 
-game.launchMainLoop()
+app.launchMainLoop()

@@ -40,6 +40,7 @@
 
         input {
             background-color: white;
+            color: black;
             border: 1.5px solid lightblue;
             border-radius: 3px;
         }
