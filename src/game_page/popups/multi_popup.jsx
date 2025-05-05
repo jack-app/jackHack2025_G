@@ -1,5 +1,5 @@
 import { h, Fragment } from 'start-dom-jsx' // JSXを使うためのおまじない
-import { PopUpWindowBase, PopUpWindowDOM } from "../popup_window_base";
+import { PopUpWindowBase, PopUpWindowDOM } from "./popup_window_base";
 
 export default function multiPopUpFactory({parent, onScoreUp}) {
   return new MultiPopUp(parent, onScoreUp);
