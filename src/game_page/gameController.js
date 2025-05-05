@@ -1,11 +1,20 @@
 import defaultPopUpFactory from "./popups/default_popup";
 import movingPopUpFactory from "./popups/moving_popup";
 import multiPopUpFactory from "./popups/multi_popup";
+import rotatingPopUpFactory from "./popups/rotating_popup";
+import leanPopUpFactory from "./popups/lean_popup";
+import scalingPopUpFactory from "./popups/scaling_popup";
+import priorityPopUpFactory from "./popups/priority_popup";
+
 
 const popupKinds = [
     defaultPopUpFactory,
     movingPopUpFactory,
     multiPopUpFactory,
+    rotatingPopUpFactory,
+    leanPopUpFactory,
+    scalingPopUpFactory,
+    priorityPopUpFactory,
 ]
 
 function pickRandomPopUp() {

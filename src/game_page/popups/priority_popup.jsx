@@ -3,15 +3,13 @@ import { PopUpWindowBase, PopUpWindowDOM } from "./popup_window_base";
 import { defaultWindowHeight, defaultWindowWidth } from './const';
 import { RandomContent } from './popup_contents';
 
-export default function rotatingPopUpFactory({parent, onScoreUp, framerate}) {
-  return new RotatingPopUp(parent, onScoreUp, framerate);
+export default function priorityPopUpFactory({parent, onScoreUp, framerate}) {
+  return new PriorityPopUp(parent, onScoreUp, framerate);
 }
-class RotatingPopUp extends PopUpWindowBase {
+class PriorityPopUp extends PopUpWindowBase {
   constructor(parent, onScoreUp, framerate) {
     super(parent, defaultWindowWidth, defaultWindowHeight, onScoreUp);
     this.framerate = framerate
-    this.rotatenumber = Math.random() * 360;
-    this.rotatespeed = Math.random() * 3;
   }
 
   createWindowDom() {
@@ -26,8 +24,5 @@ class RotatingPopUp extends PopUpWindowBase {
   }
 
   update() {
-      
-      this.rotatenumber += this.rotatespeed;
-      this.dom.style.transform = `rotate(${this.rotatenumber}deg)`;
   }
 }
