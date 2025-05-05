@@ -1,1 +1,0 @@
-export const framerate = 50; // 20Hz

@@ -7,13 +7,13 @@ export class GameSetUp {
     get maxWindowCount() {
         switch (this.difficulty) {
             case "easy":
-                return 15;
+                return 30;
             case "normal":
-                return 10;
+                return 40;
             case "hard":
-                return 15;
+                return 50;
             default:
-                return 10;
+                return 30;
         }
     }
 }

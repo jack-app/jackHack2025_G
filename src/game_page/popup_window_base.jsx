@@ -4,14 +4,29 @@ export class PopUpWindowBase {
   // x, y : from top-left of GameWindow
   // type : type of popup window
 
-  constructor(x, y, onScoreUp) {
-    this.x = x;
-    this.y = y;
+  constructor(parent, width, height, onScoreUp, x, y) {
+    this.parent = parent;
+    this.width = width;
+    this.height = height;
+    this.x = x ?? Math.random() * (this.parent.clientWidth - this.width);
+    this.y = y ?? Math.random() * (this.parent.clientHeight - this.height);
+    
     this.onScoreUp = onScoreUp;
     this.dom = this.createWindowDom();
-    this.dom.style.left = `${x}px`;
-    this.dom.style.top = `${y}px`;
+    this.dom.style.position = "absolute";
+    this.dom.style.left = `${this.x}px`;
+    this.dom.style.width = `${this.width}px`;
+    this.dom.style.top = `${this.y}px`;
+    this.dom.style.height = `${this.height}px`;
+
     this.disappeared = false;
+    this.multiPop = false;
+    this.intervalInMili = 0;
+  }
+
+  getSubsequentPopUp() {
+    // this.multiPop == true ならば実装する
+    // 最初のwindowが作成された後立て続けに呼ばれる．
   }
 
   close() {
@@ -31,7 +46,7 @@ export class PopUpWindowBase {
 }
 
 import './popup_window_base.css';
-export function PopUpWindowDOM({children, onClickClose}) {
+export function PopUpWindowDOM({children, onClickClose}) { // 必ずしも使う必要はなし
     return <div class="popup-window">
         <header>
           <span class="popup-minimize-button popup-handle-button">_</span>

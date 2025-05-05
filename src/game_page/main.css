@@ -3,6 +3,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 #game-main-field {
     height: 100%;
@@ -14,4 +15,5 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    overflow: hidden;
 }

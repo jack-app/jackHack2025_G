@@ -7,8 +7,6 @@ import Start from './start_page/main.jsx'
 import Game from './game_page/main.jsx'
 
 import Result from './result_page/main.jsx'
-import PopUpWindowManager from './game_page/popup_window_manager.js'
-import PopUpWindowFactory from './game_page/popup_window_factory.js'
 
 class App {
   constructor(rootElement) {
@@ -44,20 +42,8 @@ class App {
     const game_page_handler = new Game.handler(game_setup)
     const game_page_content = Game.content({ handler: game_page_handler })
     this.render(game_page_content)
-
-    const popup_window_manager = game_page_handler.popUpWindowManager
-    popup_window_manager.addWindowCountListener((count) => {
-      if (count > game_setup.maxWindowCount) {
-        game_page_handler.endGame()
-      }
-    })
-    popup_window_manager.addScoreUpListener(() => {
-      game_page_handler.gameResult.score += 1
-    })
-
-    popup_window_manager.start()
     await game_page_handler.waitForGameEnd()
-    popup_window_manager.stop()
+
     return game_page_handler.gameResult
   }
 

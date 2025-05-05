@@ -1,13 +1,11 @@
 import { h, Fragment } from 'start-dom-jsx' // JSXを使うためのおまじない
 
 import { GameSetUp, GameResult } from "../messengers";
-import PopUpWindowFactory from './popup_window_factory';
-import PopUpWindowManager from "./popup_window_manager";
+import GameController from "./gameController";
 
 import './main.css';
-import { GameController } from "../game-pixijs/GameController";
 
-export class GamePageHandler {
+class GamePageHandler {
   constructor(gameSetup) {
       this.gameSetup = gameSetup ?? new GameSetUp();
       this.gameResult = new GameResult();
@@ -15,9 +13,8 @@ export class GamePageHandler {
       this.popUpWindowManager = null;
   }
 
-  bindPopUpWindowManagerTo(element) {
-    const factory = new PopUpWindowFactory(this.gameSetup);
-    this.popUpWindowManager = new PopUpWindowManager(element, factory);
+  addGameEndListener(listener) {
+      this.watingGameEnd.push(listener);
   }
 
   waitForGameEnd() {
@@ -33,12 +30,23 @@ export class GamePageHandler {
   }
 }
 
-function GamePageContentRoot(props) { // すっかすか！
+function GamePageContentRoot(props) {
   const windowContainer = <div id="game-main-field"></div>
-  props.handler.bindPopUpWindowManagerTo(windowContainer);
-  return <div id="game-page-container">
+
+  const game_controller = new GameController(
+    props.handler.gameSetup,
+    props.handler.gameResult,
+    windowContainer,
+    () => props.handler.endGame()
+  );
+  
+  const content = <div id="game-page-container">
     {windowContainer}
   </div>;
+
+  game_controller.start()
+
+  return content;
 }
 
 const Game = {

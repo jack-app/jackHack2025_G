@@ -1,13 +1,16 @@
 import { h, Fragment } from 'start-dom-jsx' // JSXを使うためのおまじない
 import { PopUpWindowBase, PopUpWindowDOM } from "../popup_window_base";
 
-export default class DefaultPopUp extends PopUpWindowBase {
-  constructor(x, y, onScoreUp) {
-    super(x, y, onScoreUp);
+export default function defaultPopUpFactory({parent, onScoreUp}) {
+  return new DefaultPopUp(parent, onScoreUp);
+}
+class DefaultPopUp extends PopUpWindowBase {
+  constructor(parent, onScoreUp) {
+    super(parent, 200, 150, onScoreUp);
   }
 
   createWindowDom() {
-    return <PopUpWindowDOM 
+    return <PopUpWindowDOM // 必ずしもPopUpWindowDOMを使う必要はない
         onClickClose={
             () => {
                 this.onScoreUp()
