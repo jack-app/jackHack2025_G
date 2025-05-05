@@ -36,6 +36,7 @@ class GamePageHandler {
 function GamePageContentRoot( props ) {
    const windowContainer = <div id="game-main-field"></div>;
    const skillItemContainer = <div class="skill-bar"></div>;
+   var elapseTime = <span class="elapsed-time">0</span>;
 
    const content = <div id="game-page-container">
       { windowContainer }
@@ -44,13 +45,13 @@ function GamePageContentRoot( props ) {
             <img src={ StartButton } />
          </div>
          <div class="window-bar-item center">
-            {skillItemContainer}
+            { skillItemContainer }
          </div>
          <div class="window-bar-item right">
             <img class="footer-icon" src={ SoundIcon } />
             <img class="footer-icon" src={ GuardIcon } />
             {/* TODO : display elapse time  */ }
-            <div class="time">11:22 AM </div>
+            <div class="time">{ elapseTime } </div>
 
          </div>
       </footer>
@@ -63,6 +64,7 @@ function GamePageContentRoot( props ) {
       content,
       windowContainer,
       skillItemContainer,
+      elapseTime,
       () => props.handler.endGame()
    );
 
