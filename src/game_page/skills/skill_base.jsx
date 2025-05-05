@@ -6,6 +6,10 @@ export class SkillBase {
       this.active = false; // スキルが発動中かどうか
    }
 
+   get dom() {
+      throw new Error( "getter of dom not implemented in SkillBase" );
+   }
+
    update() {
       // ! override this
       throw new Error( "update() not implemented in SkillBase" );

@@ -59,7 +59,7 @@ export default class GameController {
       this.maxWindowCount = getMaxWindowCountFromDifficulty( GameState.getState().difficulty ); // 最大ウィンドウ数
       this.popUpContainer = popupContainer;
       this.lastPopUp = null;
-      this.startedAt = Date.now();
+      this.startTime = null;
       this.countChangeInterval = 0; // ポップアップ変更回数
       this.popUpInterval = getPopUpIntervalFromDifficulty( GameState.getState().difficulty );
 
@@ -74,7 +74,7 @@ export default class GameController {
    }
 
    get timeSinceGameStart() {
-      return Date.now() - this.startedAt;
+      return Date.now() - this.startTime;
    }
 
    onScoreUp() {
@@ -151,8 +151,7 @@ export default class GameController {
    start() {
       this.startTime = Date.now();
       this.frameInterval = setInterval( () => {
-         const elapsed = Date.now() - this.startTime;
-         GameState.dispatch( setTimer( elapsed ) ); // update the timer in the state`
+         GameState.dispatch( setTimer( this.timeSinceGameStart ) ); // update the timer in the state`
          this.triggerWindowPopup();
          this.changeInterval();
          this.windows.forEach( ( win ) => win.update() );
