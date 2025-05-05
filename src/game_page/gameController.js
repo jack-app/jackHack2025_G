@@ -59,7 +59,8 @@ export default class GameController {
       // 10秒経過したらポップアップの間隔を短くする
       this.popUpInterval = Math.max(500, this.popUpInterval - 200); // 1秒未満にはならない
     }
-  }
+    }
+    
     this.timer += elapsed;
     // popupの出現間隔は動的に変更可
     // dynamic interval gives more choice, right?
