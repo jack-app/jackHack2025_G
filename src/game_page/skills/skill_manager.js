@@ -1,4 +1,5 @@
 import BiggerCloseButtonSkill from './bigger_close_button'; // バツボタンを大きくするスキル
+import TaskManager from './task_manager';
 
 // 発動中のスキルの状態を表す．
 // 各種処理はこの状態を参照して行う．
@@ -12,7 +13,10 @@ export default class SkillManager {
    constructor( gameContainer, skillItemContainer ) {
       this.gameContainer = gameContainer; // ゲーム画面のコンテナ要素 クラスの付け替えを行う
       this.skillItemContainer = skillItemContainer; // スキルアイテムを追加するためのコンテナ要素
-      this.skillStack = [ new BiggerCloseButtonSkill() ]; // 発動可能なスキルの配列
+      this.skillStack = [
+         new BiggerCloseButtonSkill(),
+         new TaskManager(),
+      ]; // 発動可能なスキルの配列
 
       // temporal code below
       for ( const skill of this.skillStack ) {
