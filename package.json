@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "start-dom-jsx": "^1.0.0-beta.1",
+    "konva": "^9.3.20",
+    "pixi.js": "^8.9.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

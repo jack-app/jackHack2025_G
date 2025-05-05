@@ -1,0 +1,14 @@
+#game-page-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+#game-main-field {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: url(./古いwindowsの背景.jpeg) center center / cover no-repeat fixed;
+}

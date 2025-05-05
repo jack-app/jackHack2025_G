@@ -1,0 +1,50 @@
+
+#difficulty_selector{
+    label {
+        cursor: pointer;
+        margin: 10px;
+        color: white;
+        font-weight: 400;
+        font-size: 1.3em;
+        font-family: Lucida Console;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    input[type=radio]{
+        appearance: none;
+        -webkit-appearance: none;
+        width: 1.4em;
+        height: 1.4em;
+        border: 2px solid white;
+        border-radius: 50%;
+        background-color: white;
+        margin-right: 0.2em;
+        position: relative;
+        cursor: pointer;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    input[type="radio"]:checked::before{
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 0.7em;
+        height: 0.7em;
+        border-radius: 50%;
+    }
+
+    input[id=easy]:checked::before{
+        background-color: rgb(6, 248, 58);
+    }
+    input[id=normal]:checked::before{
+        background-color: rgb(40, 71, 167);
+    }
+    input[id=hard]:checked::before{
+        background-color: rgb(248, 6, 6);
+    }
+}
