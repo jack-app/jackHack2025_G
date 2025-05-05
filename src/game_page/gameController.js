@@ -39,6 +39,7 @@ export default class GameController {
     this.lastPopUpTrigger = null;
     this.timer = 0; // ポップアップタイマー
     this.gametimer = 0; // ゲームタイマー
+    this.countChangeInterval = 0; // ポップアップ変更回数
     this.popUpInterval = gameSetUp.initialPopupInterval ?? 1000; // ポップアップの間隔
 
     // game over
@@ -49,6 +50,15 @@ export default class GameController {
 
   onScoreUp() {
     this.gameResult.score += 1;
+  }
+
+  changeInterval(elapsed) {
+    this.gametimer += elapsed;
+    if (this.gametimer > 1000 * (this.countChangeInterval + 1)) {
+      // 1秒経過ごとにポップアップの間隔を短くする
+      this.popUpInterval = Math.max(500, this.popUpInterval - 50); // 0.5秒未満にはならない　0.05秒づつ速くなる
+      this.countChangeInterval += 1; // ポップアップ間隔変更回数を1増やす
+    }
   }
 
   getWindowToPopUp(elapsed) { // elapsed.. タイマーの増分
@@ -63,14 +73,7 @@ export default class GameController {
         const newWindow = defaultPopUpFactory(popupContext);
         return newWindow;
     }
-
-    this.gametimer += elapsed;
-    for (let i = 1; i < 15; i++){
-    if (this.gametimer > i*1000) {
-      // 10秒経過したらポップアップの間隔を短くする
-      this.popUpInterval = Math.max(500, this.popUpInterval - 200); // 1秒未満にはならない
-    }
-  }
+    
     this.timer += elapsed;
     // popupの出現間隔は動的に変更可
     // dynamic interval gives more choice, right?
@@ -112,6 +115,7 @@ export default class GameController {
       elapsed = Date.now() - this.lastPopUpTrigger; // in milliseconds
     }
     
+    this.changeInterval(elapsed);
     const newWindow = this.getWindowToPopUp(elapsed);
     if (newWindow !== null) {
       this.insertWindow(newWindow);

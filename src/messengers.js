@@ -16,7 +16,7 @@ export class GameSetUp {
                 return 30;
         }
     }
-    get minitialPopupInterval() {
+    get initialPopupInterval() {
         switch (this.difficulty) {
             case "easy":
                 return 3000;

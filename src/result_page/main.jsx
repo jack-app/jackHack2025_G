@@ -6,7 +6,7 @@ class ResultPageHandler {
         this.gameResult = gameResult;
         this.gameSetup = gameSetup;
         this.watingGameComfirmation = [];
-
+        this.audio = new Audio('./src/result_page/erro.mp3');
     }
 
     waitForComfirmation() {
@@ -25,8 +25,7 @@ class ResultPageHandler {
 function ResultPageContentRoot(props) {
     const score = props.handler.gameResult.score
     const user_name = props.handler.gameSetup.username 
-    const audio = new Audio('./src/result_page/erro.mp3')
-    audio.play()
+    props.handler.audio.play()
 
     const content = <div id="resultbackground">
     <br/>
