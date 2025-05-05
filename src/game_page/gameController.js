@@ -3,12 +3,14 @@ import movingPopUpFactory from "./popups/moving_popup";
 import multiPopUpFactory from "./popups/multi_popup";
 import SkillManager from "./skills/skill_manager";
 import flickeringPopUpFactory from "./popups/flicker_popup";
+import evadePopUpFactory from "./popups/evade_popup";
 
 const popupKinds = [
    defaultPopUpFactory,
    movingPopUpFactory,
    multiPopUpFactory,
    flickeringPopUpFactory,
+   evadePopUpFactory,
 ];
 
 function pickRandomPopUp() {
