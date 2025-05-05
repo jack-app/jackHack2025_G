@@ -63,7 +63,7 @@ export default class GameController {
       this.countChangeInterval = 0; // ポップアップ変更回数
       this.popUpInterval = getPopUpIntervalFromDifficulty( GameState.getState().difficulty );
 
-      this.skillManager = new SkillManager( gameContainer, skillItemContainer );
+      // this.skillManager = new SkillManager( gameContainer, skillItemContainer );
    }
 
    get timeSinceLastPopUp() {
@@ -97,6 +97,7 @@ export default class GameController {
             this.windows = this.windows.filter( ( w ) => w.id != win.id );
          },
          parent: this.popUpContainer,
+         framerate: this.framerate,
       };
 
       if ( this.timeSinceLastPopUp === null ) {
