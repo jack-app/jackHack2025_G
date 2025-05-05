@@ -35,13 +35,7 @@ class GamePageHandler {
 
 function GamePageContentRoot( props ) {
    const windowContainer = <div id="game-main-field"></div>;
-
-   const game_controller = new GameController(
-      props.handler.gameSetup,
-      props.handler.gameResult,
-      windowContainer,
-      () => props.handler.endGame()
-   );
+   const skillItemContainer = <div class="skill-bar"></div>;
 
    const content = <div id="game-page-container">
       { windowContainer }
@@ -50,8 +44,7 @@ function GamePageContentRoot( props ) {
             <img src={ StartButton } />
          </div>
          <div class="window-bar-item center">
-            <div class="skill-bar">
-            </div>
+            {skillItemContainer}
          </div>
          <div class="window-bar-item right">
             <img class="footer-icon" src={ SoundIcon } />
@@ -62,6 +55,16 @@ function GamePageContentRoot( props ) {
          </div>
       </footer>
    </div>;
+
+   // this may occurs conflict!! sorry!!
+   const game_controller = new GameController(
+      props.handler.gameSetup,
+      props.handler.gameResult,
+      content,
+      windowContainer,
+      skillItemContainer,
+      () => props.handler.endGame()
+   );
 
    game_controller.start();
 

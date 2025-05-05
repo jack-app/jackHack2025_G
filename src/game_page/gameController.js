@@ -1,6 +1,7 @@
 import defaultPopUpFactory from "./popups/default_popup";
 import movingPopUpFactory from "./popups/moving_popup";
 import multiPopUpFactory from "./popups/multi_popup";
+import SkillManager from "./skills/skill_manager";
 
 const popupKinds = [
     defaultPopUpFactory,
@@ -17,7 +18,15 @@ async function sleep(ms) {
 }
 
 export default class GameController {
-  constructor(gameSetUp, gameResult, popupContainer, gameEndCallback) {
+  // コンフリクトしたらごめん！！！！
+  constructor(
+    gameSetUp, 
+    gameResult, 
+    gameContainer, 
+    popupContainer, 
+    skillItemContainer, 
+    gameEndCallback
+  ) {
     // messengers
     this.gameSetUp = gameSetUp;
     this.gameResult = gameResult;
@@ -34,6 +43,8 @@ export default class GameController {
 
     // game over
     this.gameEndCallback = gameEndCallback;
+
+    this.skillManager = new SkillManager(gameContainer, skillItemContainer);
   }
 
   onScoreUp() {
