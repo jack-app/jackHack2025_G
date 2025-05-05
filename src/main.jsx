@@ -17,10 +17,6 @@ class App {
       this.root = rootElement;
    }
 
-   // render( component ) {
-   //    this.root.replaceChildren( component );
-   // }
-
    render() {
       console.log( 'render' );
       switch ( GameState.getState().page ) {
