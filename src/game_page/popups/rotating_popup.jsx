@@ -3,12 +3,13 @@ import { PopUpWindowBase, PopUpWindowDOM } from "./popup_window_base";
 import { defaultWindowHeight, defaultWindowWidth } from './const';
 import { RandomContent } from './popup_contents';
 
-export default function defaultPopUpFactory({parent, onScoreUp}) {
-  return new DefaultPopUp(parent, onScoreUp);
+export default function defaultPopUpFactory({parent, onScoreUp, framerate}) {
+  return new DefaultPopUp(parent, onScoreUp, framerate);
 }
 class DefaultPopUp extends PopUpWindowBase {
-  constructor(parent, onScoreUp) {
+  constructor(parent, onScoreUp, framerate) {
     super(parent, defaultWindowWidth, defaultWindowHeight, onScoreUp);
+    this.framerate = framerate
   }
 
   createWindowDom() {
@@ -22,5 +23,7 @@ class DefaultPopUp extends PopUpWindowBase {
     </PopUpWindowDOM>
   }
 
-  update() {}
+  update() {
+     this.dom.style.transform = `rotate(45)`
+  }
 }

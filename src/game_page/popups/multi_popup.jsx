@@ -1,5 +1,6 @@
 import { h, Fragment } from 'start-dom-jsx' // JSXを使うためのおまじない
 import { PopUpWindowBase, PopUpWindowDOM } from "./popup_window_base";
+import { defaultWindowHeight, defaultWindowWidth } from './const';
 import { RandomContent } from './popup_contents';
 
 export default function multiPopUpFactory({parent, onScoreUp}) {
@@ -7,7 +8,7 @@ export default function multiPopUpFactory({parent, onScoreUp}) {
 }
 class MultiPopUp extends PopUpWindowBase {
   constructor(parent, onScoreUp, residure=4, x=null, y=null) {
-    super(parent, 200, 150, onScoreUp, x, y);
+    super(parent, defaultWindowWidth, defaultWindowHeight, onScoreUp, x, y);
     this.multiPop = true;
     this.intervalInMili = 250; // ms
 

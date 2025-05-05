@@ -6,23 +6,24 @@
         margin: 0;
     }
     .user-icon {
-        width: 50px;
-        height: 50px;
-        margin: 5px;
+        width: 40px;
+        height: 40px;
+        margin: 10px;
         border-radius: 5px;
         background-color: white;
         border: 2px solid rgb(238, 203, 47);
     }
     .display-box {
         position: absolute;
-        left: 0;
+        left: 4%;
         top: 0;
         width: 300px;
         height: 64px;
+        color: white;
 
         border-radius: 1px;
         border: 1px solid white;
-        background-color: rgb(47, 47, 205);
+        background-color: rgb(62, 44, 177);
         mask-image: linear-gradient(to right, white, 80%, transparent);
         display: flex;
         align-content: center;
@@ -30,10 +31,10 @@
     }
     .input-box{
         position: absolute;
-        left: 65px;
-        top: 53px;
+        left: 94px;
+        top: 51px;
         width: 15em;
-        height: 20px;
+        height: 25px;
 
         display: flex;
         flex-direction: row;
@@ -45,8 +46,8 @@
             border-radius: 3px;
         }
 
-        img {
-            height: 20px;
+        img {  
+            height: 25px;
             width: 20px;
             background-color: green;
             margin-left: 10px;

@@ -1,3 +1,5 @@
+import { h, Fragment } from 'start-dom-jsx' // JSXを使うためのおまじない
+
 export function RandomContent() {
     const options = [
         <SampleContent/>,
