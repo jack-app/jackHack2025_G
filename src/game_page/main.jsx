@@ -14,17 +14,23 @@ function updateTimer( elapsed ) {
    const min = Math.floor( elapsed / 60000 );
    const sec = Math.floor( ( elapsed % 60000 ) / 1000 );
    const msec = Math.floor( ( elapsed % 1000 ) / 10 );
-   `${ min < 10 ? "0" : "" }${ min }:${ sec < 10 ? "0" : "" }${ sec }:${ msec < 10 ? "0" : "" }${ msec }`;
+   return `${ min < 10 ? "0" : "" }${ min }:${ sec < 10 ? "0" : "" }${ sec }:${ msec < 10 ? "0" : "" }${ msec }`;
 }
 
 function GamePage() {
    const windowContainer = <div id="game-main-field"></div>;
    const skillItemContainer = <div class="skill-bar"></div>;
+   const elapsedTime = <span class="elapsed-time">00:00:00</span>;
 
 
    GameState.dispatch( addListener( {
       type: "windows/addPopUp", effect: ( action ) => {
          windowContainer.appendChild( action.payload.dom );
+      }
+   } ) );
+   GameState.dispatch( addListener( {
+      type: "timer/setTimer", effect: ( action ) => {
+         elapsedTime.innerText = updateTimer( action.payload );
       }
    } ) );
 
@@ -41,8 +47,7 @@ function GamePage() {
          <div class="window-bar-item right">
             <img class="footer-icon" src={ SoundIcon } />
             <img class="footer-icon" src={ GuardIcon } />
-            {/* TODO : display elapse time  */ }
-            <div class="time">{ updateTimer( GameState.getState().timer ) } </div>
+            <div class="time">{ elapsedTime }</div>
 
          </div>
       </footer>
