@@ -1,6 +1,6 @@
 import { h, Fragment } from 'start-dom-jsx' // JSXを使うためのおまじない
 import "./user_select_area.css"
-import button_image from "./button-dummy.png"
+import button_image from "./windows 矢印.jpg"
 
 export default function UserSelectArea(props) {
     return <div class="user-select-area">
