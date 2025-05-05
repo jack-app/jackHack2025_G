@@ -10,10 +10,5 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    background-image: url(../assets/古いwindowsの背景.jpeg);
-    background-clip: border-box;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    overflow: hidden;
+    background: url(./古いwindowsの背景.jpeg) center center / cover no-repeat fixed;
 }
