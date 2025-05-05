@@ -1,3 +1,5 @@
+import { addPopUp, EASY, endGame, GameState, HARD, incrementScore, NORMAL, resetWindows, setTimer } from "../state";
+import Game from "./main";
 import defaultPopUpFactory from "./popups/default_popup";
 import movingPopUpFactory from "./popups/moving_popup";
 import multiPopUpFactory from "./popups/multi_popup";
@@ -17,73 +19,79 @@ async function sleep( ms ) {
    return new Promise( ( resolve ) => setTimeout( resolve, ms ) );
 }
 
+function getPopUpIntervalFromDifficulty( difficulty ) {
+   switch ( difficulty ) {
+      case EASY:
+         return 2000; // 2秒
+      case NORMAL:
+         return 1500; // 1.5秒
+      case HARD:
+         return 1000; // 1秒
+      default:
+         return 2000; // 2秒
+   }
+}
+
 export default class GameController {
    // コンフリクトしたらごめん！！！！
    constructor(
-      gameSetUp,
-      gameResult,
       gameContainer,
       popupContainer,
       skillItemContainer,
-      elapseTime,
-      gameEndCallback
    ) {
-      // messengers
-      this.gameSetUp = gameSetUp;
-      this.gameResult = gameResult;
 
       // popup windows
       this.windows = [];
-      this.frameInterval = null;
+      this.frameInterval = null; // store the setInterval ID
       this.framerate = 40; // FPS
+      this.maxWindowCount = 10; // 最大ウィンドウ数
       this.popUpContainer = popupContainer;
       this.lastPopUpTrigger = null;
       this.timer = 0; // ポップアップタイマー
       this.gametimer = 0; // ゲームタイマー
       this.countChangeInterval = 0; // ポップアップ変更回数
-      this.popUpInterval = gameSetUp.initialPopupInterval ?? 1000; // ポップアップの間隔
-
-      // game over
-      this.gameEndCallback = gameEndCallback;
+      this.popUpInterval = getPopUpIntervalFromDifficulty( GameState.getState().difficulty );
 
       this.skillManager = new SkillManager( gameContainer, skillItemContainer );
-      this.elapseTime = elapseTime;
    }
 
    onScoreUp() {
-      this.gameResult.score += 1;
+      GameState.dispatch( incrementScore() );
    }
 
-   changeInterval( elapsed ) {
-      this.gametimer += elapsed;
-      if ( this.gametimer > 1000 * ( this.countChangeInterval + 1 ) ) {
-         // 1秒経過ごとにポップアップの間隔を短くする
-         this.popUpInterval = Math.max( 500, this.popUpInterval - 50 ); // 0.5秒未満にはならない　0.05秒づつ速くなる
-         this.countChangeInterval += 1; // ポップアップ間隔変更回数を1増やす
-      }
-   }
+   // changeInterval( elapsed ) {
+   //    this.gametimer += elapsed;
+   //    if ( this.gametimer > 1000 * ( this.countChangeInterval + 1 ) ) {
+   //       // 1秒経過ごとにポップアップの間隔を短くする
+   //       this.popUpInterval = Math.max( 500, this.popUpInterval - 50 ); // 0.5秒未満にはならない　0.05秒づつ速くなる
+   //       this.countChangeInterval += 1; // ポップアップ間隔変更回数を1増やす
+   //    }
+   // }
 
-   getWindowToPopUp( elapsed ) { // elapsed.. タイマーの増分
+   getWindowToPopUp( timeSinceLastPopUp ) { // elapsed.. タイマーの増分
       const popupContext = { // to give all of information PopUpWindow needs
-         onScoreUp: () => this.onScoreUp(),
+         onScoreUp: this.onScoreUp,
+         onClose: ( win ) => {
+            this.popUpContainer.removeChild( win.dom );
+            this.windows = this.windows.filter( ( w ) => w.id != win.id );
+         },
          parent: this.popUpContainer,
-         framerate: this.framerate,
       };
 
-      if ( elapsed === null ) {
+      if ( timeSinceLastPopUp === null ) {
          // ここは最初だけ実行される
          const newWindow = defaultPopUpFactory( popupContext );
          return newWindow;
       }
 
-      this.gametimer += elapsed;
-      for ( let i = 1; i < 15; i++ ) {
-         if ( this.gametimer > i * 1000 ) {
-            // 10秒経過したらポップアップの間隔を短くする
-            this.popUpInterval = Math.max( 500, this.popUpInterval - 200 ); // 1秒未満にはならない
-         }
-      }
-      this.timer += elapsed;
+      this.gametimer += timeSinceLastPopUp;
+      // for ( let i = 1; i < 15; i++ ) {
+      //    if ( this.gametimer > i * 1000 ) {
+      //       // 10秒経過したらポップアップの間隔を短くする
+      //       this.popUpInterval = Math.max( 500, this.popUpInterval - 200 ); // 1秒未満にはならない
+      //    }
+      // }
+      this.timer += timeSinceLastPopUp;
       // popupの出現間隔は動的に変更可
       // dynamic interval gives more choice, right?
       // Poping up can be faster as the game goes on
@@ -96,6 +104,7 @@ export default class GameController {
       return newWindow; // return an array of windows
    }
 
+   // This is bug-ish
    async insertWindowsSequently( first ) {
       let newWindow = first;
       while ( newWindow !== null ) {
@@ -119,46 +128,32 @@ export default class GameController {
    }
 
    triggerWindowPopup() {
-      let elapsed = null;
+      let timeSinceLastPopUp = null;
       if ( this.lastPopUpTrigger ) {
-         elapsed = Date.now() - this.lastPopUpTrigger; // in milliseconds
+         timeSinceLastPopUp = Date.now() - this.lastPopUpTrigger; // in milliseconds
       }
 
-      const newWindow = this.getWindowToPopUp( elapsed );
+      const newWindow = this.getWindowToPopUp( timeSinceLastPopUp );
       if ( newWindow !== null ) {
          this.insertWindow( newWindow );
+         this.lastPopUpTrigger = Date.now();
       }
-
-      this.lastPopUpTrigger = Date.now();
    }
 
-   cleanUp() {
-      // this is needed to judge the number of windows corrently
-      this.windows = this.windows.filter( ( win ) => !win.disappeared );
-   }
-
-   judgeEnd() {
-      return this.windows.length > this.gameSetUp.maxWindowCount;
-   }
-
-   updateTimer( elapsed ) {
-      const min = Math.floor( elapsed / 60000 );
-      const sec = Math.floor( ( elapsed % 60000 ) / 1000 );
-      const msec = Math.floor( ( elapsed % 1000 ) / 10 );
-      this.elapseTime.innerText = `${ min < 10 ? "0" : "" }${ min }:${ sec < 10 ? "0" : "" }${ sec }:${ msec < 10 ? "0" : "" }${ msec }`;
+   judgeEnd( windows ) {
+      return windows.length > this.maxWindowCount;
    }
 
    start() {
       this.startTime = Date.now();
       this.frameInterval = setInterval( () => {
          const elapsed = Date.now() - this.startTime;
-         this.updateTimer( elapsed );
+         GameState.dispatch( setTimer( elapsed ) ); // update the timer in the state`
          this.triggerWindowPopup();
          this.windows.forEach( ( win ) => win.update() );
-         this.cleanUp();
-         if ( this.judgeEnd() ) {
+         if ( this.judgeEnd( this.windows ) ) {
+            console.log( "Game Over" );
             this.stop();
-            this.gameEndCallback();
          }
       }, 1000 / this.framerate ); // this.framerate FPSのループを回す
    }
@@ -172,5 +167,6 @@ export default class GameController {
       // Clean up windows
       this.popUpContainer.replaceChildren();
       this.windows = [];
+      GameState.dispatch( endGame() );
    }
 }

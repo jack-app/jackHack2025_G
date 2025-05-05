@@ -1,6 +1,5 @@
 import { h, Fragment } from 'start-dom-jsx'; // JSXを使うためのおまじない
 import { SkillBase, SkillItem } from "./skill_base";
-t;
 export default class TaskManager extends SkillBase {
    constructor() {
       super( "TaskManager" );

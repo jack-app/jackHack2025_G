@@ -7,36 +7,27 @@ import StartButton from "./start.png";
 import SoundIcon from "./sound-icon.png";
 import GuardIcon from "./guard-icon.png";
 import './main.css';
+import { GameState } from '../state';
+import { addListener } from '@reduxjs/toolkit';
 
-class GamePageHandler {
-   constructor( gameSetup ) {
-      this.gameSetup = gameSetup ?? new GameSetUp();
-      this.gameResult = new GameResult();
-      this.watingGameEnd = [];
-      this.popUpWindowManager = null;
-   }
-
-   addGameEndListener( listener ) {
-      this.watingGameEnd.push( listener );
-   }
-
-   waitForGameEnd() {
-      // resolveが呼ばれるまで待機する．resolveはendGameが呼ばれたときに呼ばれる
-      return new Promise( ( resolve ) => {
-         this.watingGameEnd.push( resolve );
-      } );
-   }
-
-   endGame() {
-      this.watingGameEnd.forEach( ( resolve ) => resolve() );
-      this.watingGameEnd = [];
-   }
+function updateTimer( elapsed ) {
+   const min = Math.floor( elapsed / 60000 );
+   const sec = Math.floor( ( elapsed % 60000 ) / 1000 );
+   const msec = Math.floor( ( elapsed % 1000 ) / 10 );
+   `${ min < 10 ? "0" : "" }${ min }:${ sec < 10 ? "0" : "" }${ sec }:${ msec < 10 ? "0" : "" }${ msec }`;
 }
 
-function GamePageContentRoot( props ) {
+function GamePage() {
    const windowContainer = <div id="game-main-field"></div>;
    const skillItemContainer = <div class="skill-bar"></div>;
-   var elapseTime = <span class="elapsed-time">0</span>;
+
+
+   GameState.dispatch( addListener( {
+      type: "windows/addPopUp", effect: ( action ) => {
+         windowContainer.appendChild( action.payload.dom );
+      }
+   } ) );
+
 
    const content = <div id="game-page-container">
       { windowContainer }
@@ -51,7 +42,7 @@ function GamePageContentRoot( props ) {
             <img class="footer-icon" src={ SoundIcon } />
             <img class="footer-icon" src={ GuardIcon } />
             {/* TODO : display elapse time  */ }
-            <div class="time">{ elapseTime } </div>
+            <div class="time">{ updateTimer( GameState.getState().timer ) } </div>
 
          </div>
       </footer>
@@ -59,13 +50,9 @@ function GamePageContentRoot( props ) {
 
    // this may occurs conflict!! sorry!!
    const game_controller = new GameController(
-      props.handler.gameSetup,
-      props.handler.gameResult,
       content,
       windowContainer,
       skillItemContainer,
-      elapseTime,
-      () => props.handler.endGame()
    );
 
    game_controller.start();
@@ -73,8 +60,4 @@ function GamePageContentRoot( props ) {
    return content;
 }
 
-const Game = {
-   handler: GamePageHandler,
-   content: GamePageContentRoot,
-};
-export default Game;
+export default GamePage;
