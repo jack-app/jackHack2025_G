@@ -31,19 +31,6 @@ async function sleep( ms ) {
    return new Promise( ( resolve ) => setTimeout( resolve, ms ) );
 }
 
-function getMaxWindowCountFromDifficulty( difficulty ) {
-   switch ( difficulty ) {
-      case EASY:
-         return 30;
-      case NORMAL:
-         return 40;
-      case HARD:
-         return 50;
-      default:
-         return 30;
-   }
-}
-
 function getPopUpIntervalFromDifficulty( difficulty ) {
    switch ( difficulty ) {
       // in milliseconds
@@ -66,8 +53,6 @@ export default class PopUpWindowManager {
         this.getTimeSinceGameStart = getTimeSinceGameStart;
 
         this.windows = [];
-        
-        this.maxWindowCount = getMaxWindowCountFromDifficulty( GameState.getState().difficulty ); // 最大ウィンドウ数
         
         this.lastPopUp = null;
         
@@ -149,5 +134,9 @@ export default class PopUpWindowManager {
         this.triggerWindowPopup();
         this.changeInterval();
         this.windows.forEach( ( win ) => win.update() );
+    }
+
+    clearAllWindows() {
+      this.popUpContainer.replaceChildren();
     }
 }
