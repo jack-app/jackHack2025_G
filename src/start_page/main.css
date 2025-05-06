@@ -28,6 +28,10 @@
         font-size: xx-large;
         color: white;
         background: linear-gradient(-20deg, rgb(93, 120, 226) 80%, white );
+        #start_window_explain{
+            font-size: large;
+            font-family: "メイリオ" ;
+        }
     }
     #start-body-middle-line {
         width: 1px;
