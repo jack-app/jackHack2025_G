@@ -1,7 +1,6 @@
 import { h, Fragment } from 'start-dom-jsx'; // JSXを使うためのおまじない
 import { SkillBase } from "./skill_base";
-import skillIcon from "./dummy-image-square1.jpg";
-import "./delete_windows.css"; // スキルのCSSをインポート
+import skillIcon from "./delete-windows-icon.png";
 
 export default function getSkillFactory({notifyClick, gameContainer, popUpManager}) {
    return () => new DeleteWindowsSkill(notifyClick, gameContainer, popUpManager);
