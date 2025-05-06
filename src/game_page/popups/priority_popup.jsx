@@ -3,12 +3,12 @@ import { PopUpWindowBase, PopUpWindowDOM } from "./popup_window_base";
 import { defaultWindowHeight, defaultWindowWidth } from './const';
 import { RandomContent } from './popup_contents';
 
-export default function priorityPopUpFactory({parent, onScoreUp, framerate}) {
-  return new PriorityPopUp(parent, onScoreUp, framerate);
+export default function priorityPopUpFactory({parent, onScoreUp, framerate, onClose}) {
+  return new PriorityPopUp(parent, onScoreUp, framerate, onClose);
 }
 class PriorityPopUp extends PopUpWindowBase {
-  constructor(parent, onScoreUp, framerate) {
-    super(parent, defaultWindowWidth, defaultWindowHeight, onScoreUp);
+  constructor(parent, onScoreUp, framerate, onClose) {
+    super(parent, defaultWindowWidth, defaultWindowHeight, onScoreUp, onClose);
     this.framerate = framerate
   }
 
@@ -17,7 +17,7 @@ class PriorityPopUp extends PopUpWindowBase {
         onClickClose={
             () => {
                 this.onScoreUp()
-                this.close()
+                this.onClose( this )
         }}>
         <RandomContent/>
     </PopUpWindowDOM>

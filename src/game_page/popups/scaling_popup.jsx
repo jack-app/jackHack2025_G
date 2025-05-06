@@ -3,12 +3,12 @@ import { PopUpWindowBase, PopUpWindowDOM } from "./popup_window_base";
 import { defaultWindowHeight, defaultWindowWidth } from './const';
 import { RandomContent } from './popup_contents';
 
-export default function scalingPopUpFactory({parent, onScoreUp, framerate}) {
-  return new ScalingPopUp(parent, onScoreUp, framerate);
+export default function scalingPopUpFactory({parent, onScoreUp, framerate, onClose}) {
+  return new ScalingPopUp(parent, onScoreUp, framerate, onClose);
 }
 class ScalingPopUp extends PopUpWindowBase {
-  constructor(parent, onScoreUp, framerate) {
-    super(parent, defaultWindowWidth, defaultWindowHeight, onScoreUp);
+  constructor(parent, onScoreUp, framerate, onClose) {
+    super(parent, defaultWindowWidth, defaultWindowHeight, onScoreUp, onClose);
     this.framerate = framerate
     this.scale_degnumber = 0;
   }
@@ -18,7 +18,7 @@ class ScalingPopUp extends PopUpWindowBase {
         onClickClose={
             () => {
                 this.onScoreUp()
-                this.close()
+                this.onClose( this )
         }}>
         <RandomContent/>
     </PopUpWindowDOM>

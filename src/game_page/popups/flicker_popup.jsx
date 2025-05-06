@@ -3,13 +3,13 @@ import { PopUpWindowBase, PopUpWindowDOM } from './popup_window_base';
 import { defaultWindowHeight, defaultWindowWidth } from './const';
 import { RandomContent } from './popup_contents';
 
-export default function flickeringPopUpFactory({ parent, onScoreUp }) {
-  return new FlickeringPopUp(parent, onScoreUp);
+export default function flickeringPopUpFactory({ parent, onScoreUp, onClose }) {
+  return new FlickeringPopUp(parent, onScoreUp, onClose);
 }
 
 class FlickeringPopUp extends PopUpWindowBase {
-  constructor(parent, onScoreUp) {
-    super(parent, defaultWindowWidth, defaultWindowHeight, onScoreUp);
+  constructor(parent, onScoreUp, onClose) {
+    super(parent, defaultWindowWidth, defaultWindowHeight, onScoreUp, onClose);
     
     this.visible = true;
     this.toggleInterval = 200; // 点滅間隔（ms）
@@ -33,7 +33,7 @@ class FlickeringPopUp extends PopUpWindowBase {
       onClickClose={() => {
         this.onScoreUp();
         this.stopFlickering();
-        this.close();
+        this.onClose( this );
       }}
     >
       <RandomContent />

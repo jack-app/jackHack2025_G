@@ -29,12 +29,11 @@ class MultiPopUp extends PopUpWindowBase {
 
    getSubsequentPopUp() {
       if ( this.residure <= 0 ) return null;
-      this.residure -= 1;
       return new MultiPopUp(
          this.parent,
          this.onScoreUp,
          this.onClose,
-         this.residure,
+         this.residure - 1,
          this.x + this.xShiftAmount,
          this.y + this.yShiftAmount
       );
