@@ -195,4 +195,10 @@ export default class PopUpWindowManager {
    clearAllWindows() {
       this.popUpContainer.replaceChildren();
    }
+
+   deleteWindow() {
+      if (this.windows.length > 0) {
+         this.windows[0].onClose(this.windows[0])
+      }
+   }
 }

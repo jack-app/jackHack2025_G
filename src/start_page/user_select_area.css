@@ -1,56 +1,60 @@
 #start-body-right>.user-select-area {
-    position: relative;
-    width: 100%;
-    height: 64px;
-    p {
-        margin: 0;
-    }
-    .user-icon {
-        width: 40px;
-        height: 40px;
-        margin: 10px;
-        border-radius: 5px;
-        background-color: white;
-        border: 2px solid rgb(238, 203, 47);
-    }
-    .display-box {
-        position: absolute;
-        left: 4%;
-        top: 0;
-        width: 300px;
-        height: 64px;
-        color: white;
+   position: relative;
+   width: 100%;
+   height: 64px;
 
-        border-radius: 1px;
-        border: 1px solid white;
-        background-color: rgb(62, 44, 177);
-        mask-image: linear-gradient(to right, white, 80%, transparent);
-        display: flex;
-        align-content: center;
-        flex-direction: row;
-    }
-    .input-box{
-        position: absolute;
-        left: 94px;
-        top: 51px;
-        width: 15em;
-        height: 25px;
+   p {
+      margin: 0;
+   }
 
-        display: flex;
-        flex-direction: row;
+   .user-icon {
+      width: 40px;
+      height: 40px;
+      margin: 10px;
+      border-radius: 5px;
+      background-color: white;
+      border: 2px solid rgb(238, 203, 47);
 
-        input {
-            background-color: white;
-            color: black;
-            border: 1.5px solid lightblue;
-            border-radius: 3px;
-        }
+      img {
+         width: 100%;
+         height: 100%;
+      }
+   }
 
-        img {  
-            height: 25px;
-            width: 20px;
-            background-color: green;
-            margin-left: 10px;
-        }
-    }
+   .display-box {
+      position: absolute;
+      left: 4%;
+      top: 0;
+      width: 300px;
+      height: 64px;
+      color: white;
+
+      border-radius: 1px;
+      border: 1px solid white;
+      background-color: rgb(62, 44, 177);
+      mask-image: linear-gradient(to right, white, 80%, transparent);
+      display: flex;
+      align-content: center;
+      flex-direction: row;
+   }
+
+   .input-box {
+      position: absolute;
+      left: 90px;
+      top: 51px;
+      width: 15em;
+      height: 25px;
+
+      display: flex;
+      flex-direction: row;
+      gap: 7px;
+
+      input {
+         background-color: white;
+         color: black;
+         border: 1.5px solid lightblue;
+         border-radius: 3px;
+         width: 150px;
+      }
+   }
 }
