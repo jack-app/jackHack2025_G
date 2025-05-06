@@ -37,7 +37,7 @@ export default class GameController {
       this.maxWindowCount = getMaxWindowCountFromDifficulty( GameState.getState().difficulty ); // 最大ウィンドウ数
       this.startTime = null;
 
-      this.skillManager = new SkillManager( gameContainer, skillItemContainer );
+      this.skillManager = new SkillManager( gameContainer, skillItemContainer, this.popUpManager );
    }
 
    get timeSinceGameStart() {
@@ -46,6 +46,7 @@ export default class GameController {
 
    onScoreUp() {
       GameState.dispatch( incrementScore() );
+      this.skillManager.triggerSkillInsertion( GameState.getState().user.score );
    }
 
    judgeEnd() {
