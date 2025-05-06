@@ -14,12 +14,14 @@ export default class SkillManager {
       this.gameContainer = gameContainer; // ゲーム画面のコンテナ要素 クラスの付け替えを行う
       this.skillItemContainer = skillItemContainer; // スキルアイテムを追加するためのコンテナ要素
       const skillContext = {notifyClick: this.invokeSkill.bind(this), gameContainer};     
-      this.skillSet = [
-         biggerCloseButtonSkillFactory(skillContext),
-         
-      ]; // 発動可能なスキルの配列
+      this.skillSet = {
+         0: [
+            biggerCloseButtonSkillFactory(skillContext),
+         ]
+      }
+
       // temporal code below
-      this.skillStack = this.skillSet.map((factory)=>factory()); // 今，発動可能なスキルの配列
+      this.skillStack = this.skillSet[0].map((factory)=>factory()); // 今，発動可能なスキルの配列
       for ( const skill of this.skillStack ) {
          this.skillItemContainer.appendChild( skill.dom ); // スキルアイテムをコンテナに追加
       }
@@ -37,7 +39,9 @@ export default class SkillManager {
       );
    }
 
-   appendNewSkill( skill ) {
+
+
+   appendNewSkill( tier ) {
       this.skillStack.push( skill );
    }
 }
