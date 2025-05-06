@@ -1,4 +1,4 @@
-import BiggerCloseButtonSkill from './bigger_close_button'; // バツボタンを大きくするスキル
+import biggerCloseButtonSkillFactory from './bigger_close_button'; // バツボタンを大きくするスキル
 import TaskManager from './task_manager';
 
 // 発動中のスキルの状態を表す．
@@ -13,17 +13,30 @@ export default class SkillManager {
    constructor( gameContainer, skillItemContainer ) {
       this.gameContainer = gameContainer; // ゲーム画面のコンテナ要素 クラスの付け替えを行う
       this.skillItemContainer = skillItemContainer; // スキルアイテムを追加するためのコンテナ要素
-      this.skillStack = [
-         new BiggerCloseButtonSkill(),
-         new TaskManager(),
+      const skillContext = {notifyClick: this.invokeSkill.bind(this), gameContainer};     
+      this.skillSet = [
+         biggerCloseButtonSkillFactory(skillContext),
+         
       ]; // 発動可能なスキルの配列
-
       // temporal code below
+      this.skillStack = this.skillSet.map((factory)=>factory()); // 今，発動可能なスキルの配列
       for ( const skill of this.skillStack ) {
          this.skillItemContainer.appendChild( skill.dom ); // スキルアイテムをコンテナに追加
-
       }
    }
+
+   invokeSkill( skillId ) {
+      console.log("a skill is invoked", skillId);
+      this.skillStack = this.skillStack.filter( // remove the invoked skill from the stack
+         ( skill ) => {
+            if ( skill.id !== skillId ) return true;
+            this.skillItemContainer.removeChild( skill.dom ); // スキルアイテムをコンテナから削除
+            skill.makeEffect(); // スキルの効果を発動
+            return false;
+         }
+      );
+   }
+
    appendNewSkill( skill ) {
       this.skillStack.push( skill );
    }

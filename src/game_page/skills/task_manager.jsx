@@ -1,5 +1,7 @@
 import { h, Fragment } from 'start-dom-jsx'; // JSXを使うためのおまじない
 import { SkillBase, SkillItem } from "./skill_base";
+
+// I think this is dead code
 export default class TaskManager extends SkillBase {
    constructor() {
       super( "TaskManager" );
@@ -18,8 +20,6 @@ export default class TaskManager extends SkillBase {
    onClick() {
       this.active = !this.active;
       this.update();
-
    }
-
 }
 
