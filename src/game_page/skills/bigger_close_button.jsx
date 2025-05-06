@@ -1,29 +1,30 @@
 import { h, Fragment } from 'start-dom-jsx'; // JSXを使うためのおまじない
-import { SkillBase, SkillItem } from "./skill_base";
+import { SkillBase } from "./skill_base";
+import skillIcon from "./dummy-image-square1.jpg";
+import "./bigger_close_button.css"; // スキルのCSSをインポート
 
-export default class BiggerCloseButtonSkill extends SkillBase {
-   constructor() {
-      super( "BiggerCloseButton" );
-      this.dom = new SkillItem( { onClick: this.onClick.bind( this ) } );
-      console.log( this.dom );
-      this.update();
+export default function getSkillFactory({notifyClick, gameContainer}) {
+   return () => new BiggerCloseButtonSkill(notifyClick, gameContainer);
+};
+
+class BiggerCloseButtonSkill extends SkillBase {
+   constructor(notifyClick, gameContainer) {
+      super( "BiggerCloseButton", skillIcon, notifyClick);
+      this.gameContainer = gameContainer;
+      this.duration = 5000;
+      this.rest = this.duration;
    }
 
-   update() {
-      console.log( "BiggerCloseButton update", this );
-      const innerHTML = ( this.active ) ?
-         `<img src="https://via.placeholder.com/50" alt="Bigger Close Button" />` :
-         `<img src="https://via.placeholder.com/20" alt="Normal Close Button" />`;
-      console.log( innerHTML );
-      this.dom.innerHTML = `${ innerHTML }`;
-      console.log( "BiggerCloseButton update", this );
+   async makeEffect() {
+      const startTime = Date.now();
+      let elapsed = 0;
+      while ( elapsed < this.duration ) {
+         this.rest = this.duration - elapsed;
+         this.gameContainer.classList.add( "skill-BiggerCloseButton-enabled" );
+         await new Promise( ( resolve ) => setTimeout( resolve, 500 ) );
+         elapsed = Date.now() - startTime;
+      }
+      this.gameContainer.classList.remove( "skill-BiggerCloseButton-enabled" );
    }
-   onClick() {
-      console.log( "BiggerCloseButton clicked" );
-      this.active = !this.active;
-      this.update();
-
-   }
-
 }
 
