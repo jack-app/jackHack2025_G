@@ -13,15 +13,15 @@ import evadePopUpFactory from "./evade_popup";
 import { addListener } from "@reduxjs/toolkit";
 
 const popupKinds = [
-   priorityPopUpFactory,
-   evadePopUpFactory,
-   movingPopUpFactory,
    defaultPopUpFactory,
    leanPopUpFactory,
+   movingPopUpFactory,
    flickeringPopUpFactory,
-   scalingPopUpFactory,
    multiPopUpFactory,
+   evadePopUpFactory,
+   scalingPopUpFactory,
    rotatingPopUpFactory,
+   priorityPopUpFactory,
    
 ];
 
@@ -34,11 +34,11 @@ function getPopUpIntervalFromDifficulty( difficulty ) {
    switch ( difficulty ) {
       // in milliseconds
       case EASY:
-         return 5000;
+         return 2500;
       case NORMAL:
-         return 3000;
+         return 2000;
       case HARD:
-         return 1000;
+         return 1500;
       default:
          return 2000;
    }
@@ -77,6 +77,8 @@ export default class PopUpWindowManager {
             console.log( "availablePopUps", this.availablePopUps );
          }
       } ) );
+
+      this.changeCount = 0
    }
 
    updateAvailablePopUps( number ) {
@@ -97,8 +99,9 @@ export default class PopUpWindowManager {
       var newKindCount = currentKindCount;
       // Update Logic
       {
-         if ( currentTime > 10000 * ( currentKindCount + 1 ) ) {
-            newKindCount += 1; // ポップアップの種類を1増やす
+         if ( currentTime > 10000 * ( this.changeCount + 1 ) ) {
+            newKindCount += 1; // ポップ.アップの種類を1増やす
+            this.changeCount += 1;
          }
 
       }
@@ -123,9 +126,9 @@ export default class PopUpWindowManager {
    }
 
    changeInterval() {
-      if ( this.getTimeSinceGameStart() > 2000 * ( this.countChangeInterval + 1 ) ) {
+      if ( this.getTimeSinceGameStart() > 1000 * ( this.countChangeInterval + 1 ) ) {
          // 1秒経過ごとにポップアップの間隔を短くする
-         this.popUpInterval = Math.max( 500, this.popUpInterval - 50 ); // 0.5秒未満にはならない　0.05秒づつ速くなる
+         this.popUpInterval = Math.max( 500, this.popUpInterval - 20 ); // 0.5秒未満にはならない　0.05秒づつ速くなる
          this.countChangeInterval += 1; // ポップアップ間隔変更回数を1増やす
       }
    }
