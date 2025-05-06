@@ -58,3 +58,25 @@
       }
    }
 }
+
+.info-button img {
+   height: 100%;
+}
+
+.info-button .credit {
+   visibility: hidden;
+   width: 300px;
+   background-color: black;
+   color: #fff;
+   text-align: center;
+   padding: 5px 0;
+   border-radius: 6px;
+
+   /* Position the tooltip text - see examples below! */
+   position: absolute;
+   z-index: 1;
+}
+
+.info-button:hover .credit {
+   visibility: visible;
+}

@@ -5,6 +5,15 @@ import info_button_image from "./windows-info.png";
 import profil_picture from "./profil-pic.jpg";
 import { GameState, setUserName, startGame } from '../state';
 
+function GitHubLink( { username } ) {
+   const anchor = document.createElement( "a" );
+   anchor.href = `https://github.com/${ username.replace( /^@/, '' ) }`;
+   anchor.target = "_blank";
+   anchor.textContent = username;
+   return anchor;
+}
+
+
 export default function UserSelectArea() {
    const onChange = ( element ) => {
       console.log( "onChange", element.target.value );
@@ -30,7 +39,19 @@ export default function UserSelectArea() {
       <div class="input-box">
          <input onChange={ onChange } value={ user_name } />
          <img src={ login_button_image } onClick={ onClick } />
-         <img src={ info_button_image } />
+         <div class="info-button">
+            <img src={ info_button_image } />
+            <div class="credit">
+               <p> Credit Team G </p>
+               <ol
+                  class="credit-list">
+                  <li> Enpitsu () </li>
+                  <li>  Wulfy (<GitHubLink username={ '@pewulfman' } />) </li>
+                  <li> 2023年6月3日 </li>
+                  <li> 2023年6月4日 </li>
+               </ol>
+            </div>
+         </div>
       </div>
-   </div>;
+   </div >;
 }
