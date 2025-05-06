@@ -168,7 +168,7 @@ export default class GameController {
    }
 
    judgeEnd() {
-      return this.popUpManager.windows > this.maxWindowCount;
+      return this.popUpManager.windows.length > this.maxWindowCount;
    }
 
    start() {
