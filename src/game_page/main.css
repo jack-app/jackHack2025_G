@@ -53,6 +53,15 @@
    align-items: left;
 }
 
+.skill-bar {
+   display: flex;
+   flex-direction: row;   
+}
+
+.skill-item {
+   margin: 5px;
+}
+
 .time {
    margin: 0px 5px;
    color: rgb(255, 255, 255);

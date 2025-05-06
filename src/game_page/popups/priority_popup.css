@@ -1,0 +1,8 @@
+.priority-cover {
+    z-index: 1;
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scale: 2;
+}

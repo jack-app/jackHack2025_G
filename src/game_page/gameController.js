@@ -1,16 +1,6 @@
-import { addPopUp, EASY, endGame, GameState, HARD, incrementScore, NORMAL, resetWindows, setTimer } from "../state";
-import Game from "./main";
-import defaultPopUpFactory from "./popups/default_popup";
-import movingPopUpFactory from "./popups/moving_popup";
-import multiPopUpFactory from "./popups/multi_popup";
+import { EASY, endGame, GameState, HARD, incrementScore, NORMAL, resetScore, setTimer } from "../state";
 import SkillManager from "./skills/skill_manager";
-import rotatingPopUpFactory from "./popups/rotating_popup";
-import leanPopUpFactory from "./popups/lean_popup";
-import scalingPopUpFactory from "./popups/scaling_popup";
-import priorityPopUpFactory from "./popups/priority_popup";
 
-import flickeringPopUpFactory from "./popups/flicker_popup";
-import evadePopUpFactory from "./popups/evade_popup";
 import PopUpWindowManager from "./popups/popUpWindowManager";
 
 function getMaxWindowCountFromDifficulty( difficulty ) {
@@ -38,16 +28,16 @@ export default class GameController {
       this.framerate = 40; // FPS
 
       this.popUpManager = new PopUpWindowManager(
-        popupContainer, 
-        this.framerate, 
-        () => this.onScoreUp(),
-        () => this.timeSinceGameStart,
-      )
+         popupContainer,
+         this.framerate,
+         () => this.onScoreUp(),
+         () => this.timeSinceGameStart,
+      );
 
-      this.maxWindowCount = getMaxWindowCountFromDifficulty( GameState.getState().difficulty ); // 最大ウィンドウ数      
+      this.maxWindowCount = getMaxWindowCountFromDifficulty( GameState.getState().difficulty ); // 最大ウィンドウ数
       this.startTime = null;
 
-      this.skillManager = new SkillManager( gameContainer, skillItemContainer );
+      this.skillManager = new SkillManager( gameContainer, skillItemContainer, this.popUpManager );
    }
 
    get timeSinceGameStart() {
@@ -56,6 +46,7 @@ export default class GameController {
 
    onScoreUp() {
       GameState.dispatch( incrementScore() );
+      this.skillManager.triggerSkillInsertion( GameState.getState().user.score );
    }
 
    judgeEnd() {
@@ -64,8 +55,10 @@ export default class GameController {
 
    start() {
       this.startTime = Date.now();
+      GameState.dispatch( resetScore() );
       this.frameInterval = setInterval( () => {
          GameState.dispatch( setTimer( this.timeSinceGameStart ) ); // update the timer in the state`
+         this.popUpManager.checkUpdateKindCount();
          this.popUpManager.updatePerFrame();
          if ( this.judgeEnd() ) {
             console.log( "Game Over" );

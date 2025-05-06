@@ -1,4 +1,5 @@
 import { h, Fragment } from 'start-dom-jsx'; // JSXを使うためのおまじない
+import "./skill_base.css"
 
 function getIdOfSkillItem() {
    return crypto.randomUUID();

@@ -1,30 +1,27 @@
-import biggerCloseButtonSkillFactory from './bigger_close_button'; // バツボタンを大きくするスキル
-import TaskManager from './task_manager';
+import getBiggerCloseButtonSkillFactory from './bigger_close_button'; // バツボタンを大きくするスキル
+import getDeleteWindowsSkillFactory from './delete_windows'; //windowを消すスキル
 
-// 発動中のスキルの状態を表す．
-// 各種処理はこの状態を参照して行う．
-
-// バツボタンの大きさの変更にあたって動的にCSSを変更したいときは，
-// game-page-containerのクラスを変更すると良い.
-// #game-page-container {...} 下に通常時のスタイル，
-// #game-page-container.skill-active {...} 下にスキル発動中のスタイルを書き，
-// スキル発動中はgame-page-containerにskill-activeクラスを追加するようにすれば，スキル発動中のみ見た目や大きさを変更することができる．
 export default class SkillManager {
-   constructor( gameContainer, skillItemContainer ) {
+   constructor( gameContainer, skillItemContainer, popUpManager ) {
       this.gameContainer = gameContainer; // ゲーム画面のコンテナ要素 クラスの付け替えを行う
       this.skillItemContainer = skillItemContainer; // スキルアイテムを追加するためのコンテナ要素
-      const skillContext = {notifyClick: this.invokeSkill.bind(this), gameContainer};     
+      this.popUpManager = popUpManager; // ポップアップウィンドウのマネージャー // スキルの効果の発動に使ってください
+      const skillContext = {notifyClick: this.invokeSkill.bind(this), gameContainer, popUpManager};     
       this.skillSet = {
          0: [
-            biggerCloseButtonSkillFactory(skillContext),
-         ]
-      }
+            getBiggerCloseButtonSkillFactory(skillContext),
+            getDeleteWindowsSkillFactory(skillContext),
+         ],
+         1: [
+         ],
+         2: [
 
-      // temporal code below
-      this.skillStack = this.skillSet[0].map((factory)=>factory()); // 今，発動可能なスキルの配列
-      for ( const skill of this.skillStack ) {
-         this.skillItemContainer.appendChild( skill.dom ); // スキルアイテムをコンテナに追加
+         ],
+         3: [
+
+         ],
       }
+      this.skillStack = []; // 発動中のスキルの配列
    }
 
    invokeSkill( skillId ) {
@@ -39,9 +36,31 @@ export default class SkillManager {
       );
    }
 
+   triggerSkillInsertion( score ) {
+      // スコアの増加時に確率でスキルを追加する
 
+      if (Math.random() > 0.1) return; // スキルを獲得する確率
+      
+      if (score < 30) {
+         this.appendSkill( 0 );
+      } else if ( score < 50 ) {
+         this.appendSkill( 1 );
+      } else if ( score < 70 ) {
+         this.appendSkill( 2 );
+      } else {
+         this.appendSkill( 3 );
+      }
+   }
 
-   appendNewSkill( tier ) {
-      this.skillStack.push( skill );
+   appendSkill( tier ) {
+      let choices = [];
+      for (let i = 0; i <= tier; i++) {
+         choices = choices.concat(this.skillSet[i])
+      }
+      const skillFactory = choices[Math.floor(Math.random() * choices.length)];
+      const skill = skillFactory();
+
+      this.skillStack.push(skill);
+      this.skillItemContainer.appendChild(skill.dom); // スキルアイテムをコンテナに追加
    }
 }
