@@ -158,7 +158,7 @@ export default class GameController {
    }
 
    judgeEnd( windows ) {
-      return windows.length > this.maxWindowCount;
+      // return windows.length > this.maxWindowCount;
    }
 
    start() {

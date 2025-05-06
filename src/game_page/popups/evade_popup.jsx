@@ -3,13 +3,13 @@ import { PopUpWindowBase, PopUpWindowDOM } from "./popup_window_base";
 import { defaultWindowHeight, defaultWindowWidth } from './const';
 import { RandomContent } from './popup_contents';
 
-export default function evadePopUpFactory({ onScoreUp, parent, framerate }) {
-  return new EvadePopUp(parent, onScoreUp, framerate);
+export default function evadePopUpFactory({ onScoreUp, parent, framerate, onClose }) {
+  return new EvadePopUp(parent, onScoreUp, framerate, onClose);
 }
 
 class EvadePopUp extends PopUpWindowBase {
-  constructor(parent, onScoreUp, framerate) {
-    super(parent, defaultWindowWidth, defaultWindowHeight, onScoreUp);
+  constructor(parent, onScoreUp, framerate, onClose) {
+    super(parent, defaultWindowWidth, defaultWindowHeight, onScoreUp, onClose);
     this.framerate = framerate;
     this.speed = 150 / framerate; // 少し速めに逃げる
     this.mouseX = null;
@@ -23,8 +23,8 @@ class EvadePopUp extends PopUpWindowBase {
     return <PopUpWindowDOM
       onClickClose={() => {
         this.onScoreUp();
-        this.close();
         window.removeEventListener("mousemove", this.trackMouse);
+        this.onClose( this );
       }}
     >
       <RandomContent />
