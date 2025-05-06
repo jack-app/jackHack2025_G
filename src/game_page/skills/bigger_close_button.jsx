@@ -1,6 +1,6 @@
 import { h, Fragment } from 'start-dom-jsx'; // JSXを使うためのおまじない
 import { SkillBase } from "./skill_base";
-import skillIcon from "./dummy-image-square1.jpg";
+import skillIcon from "./bigger-close-button-icon.png";
 import "./bigger_close_button.css"; // スキルのCSSをインポート
 
 export default function getSkillFactory({notifyClick, gameContainer}) {
