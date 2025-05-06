@@ -49,13 +49,12 @@
 .window-bar-item.center {
    flex-grow: 1;
    display: flex;
-   justify-content: left;
-   align-items: left;
+   justify-content: space-between;
 }
 
 .skill-bar {
    display: flex;
-   flex-direction: row;   
+   flex-direction: row;
 }
 
 .skill-item {
@@ -76,6 +75,15 @@
 }
 
 .elapsed-time {
+   color: rgb(255, 255, 255);
+   font-size: 11px;
+   text-shadow: none;
+   font-family: Tahoma, sans-serif, monospace;
+   width: 50px;
+}
+
+.score {
+   right: 0px;
    color: rgb(255, 255, 255);
    font-size: 11px;
    text-shadow: none;
