@@ -47,6 +47,7 @@ export default function UserSelectArea() {
                   class="credit-list">
                   <li> Enpitsu () </li>
                   <li>  Wulfy (<GitHubLink username={ '@pewulfman' } />) </li>
+                  <li> gla (<GitHubLink username={'@gla-6910 '} />)</li>
                   <li> 2023年6月3日 </li>
                   <li> 2023年6月4日 </li>
                </ul>
