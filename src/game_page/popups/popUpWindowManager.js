@@ -13,15 +13,16 @@ import evadePopUpFactory from "./evade_popup";
 import { addListener } from "@reduxjs/toolkit";
 
 const popupKinds = [
-   defaultPopUpFactory,
-   movingPopUpFactory,
-   multiPopUpFactory,
-   flickeringPopUpFactory,
-   evadePopUpFactory,
-   rotatingPopUpFactory,
-   leanPopUpFactory,
-   scalingPopUpFactory,
    priorityPopUpFactory,
+   evadePopUpFactory,
+   movingPopUpFactory,
+   defaultPopUpFactory,
+   leanPopUpFactory,
+   flickeringPopUpFactory,
+   scalingPopUpFactory,
+   multiPopUpFactory,
+   rotatingPopUpFactory,
+   
 ];
 
 
@@ -33,9 +34,9 @@ function getPopUpIntervalFromDifficulty( difficulty ) {
    switch ( difficulty ) {
       // in milliseconds
       case EASY:
-         return 3000;
+         return 5000;
       case NORMAL:
-         return 2000;
+         return 3000;
       case HARD:
          return 1000;
       default:
@@ -122,7 +123,7 @@ export default class PopUpWindowManager {
    }
 
    changeInterval() {
-      if ( this.getTimeSinceGameStart() > 1000 * ( this.countChangeInterval + 1 ) ) {
+      if ( this.getTimeSinceGameStart() > 2000 * ( this.countChangeInterval + 1 ) ) {
          // 1秒経過ごとにポップアップの間隔を短くする
          this.popUpInterval = Math.max( 500, this.popUpInterval - 50 ); // 0.5秒未満にはならない　0.05秒づつ速くなる
          this.countChangeInterval += 1; // ポップアップ間隔変更回数を1増やす
@@ -137,6 +138,7 @@ export default class PopUpWindowManager {
             this.windows = this.windows.filter( ( w ) => w.id != win.id );
          },
          parent: this.popUpContainer,
+         framerate: this.framerate
       };
 
       if ( this.timeSinceLastPopUp === null ) {

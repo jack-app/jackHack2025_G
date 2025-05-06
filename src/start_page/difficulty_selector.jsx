@@ -1,11 +1,11 @@
 import { h, Fragment } from 'start-dom-jsx'; // JSXを使うためのおまじない
 import "./difficulty_selector.css";
-import { EASY, HARD, NORMAL, setDifficulty } from '../state';
+import { EASY, HARD, NORMAL, setDifficulty, GameState} from '../state';
 
 export default function DifficultySelector() {
    const onChange = ( element ) => {
       console.log( "onChange", element.target.value );
-      setDifficulty( element.target.value );
+      GameState.dispatch(setDifficulty(Number(element.target.value) ));
    };
    return <div id="difficulty_selector">
       <input
