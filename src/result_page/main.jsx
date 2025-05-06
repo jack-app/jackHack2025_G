@@ -43,7 +43,9 @@ function ResultPage() {
       <p>Beginning dump of physical memory<br />
          Physical memory dump complete.<br />
          Contact your system administrator or technical support group for furtherassistance.</p>
-      <button onClick={ onClick }>Restart</button>
+      <div class="button-container">
+         <button onClick={ onClick }>Restart</button>
+      </div>
    </div>;
 }
 

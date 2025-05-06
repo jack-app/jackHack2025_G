@@ -1,15 +1,20 @@
+#resultbackground {
+   background-color: rgb(64, 28, 192);
+   height: 100%;
+   /* 画面全体の高さ */
+   width: 100%;
+   color: white;
+   font-family: Lucida Console;
 
-#resultbackground{
-    background-color: rgb(64, 28, 192);
-    height: 100%; /* 画面全体の高さ */
-    width: 100%; 
-    color:white;
-    font-family: Lucida Console;
+   .button-container {
+      display: flex;
+      justify-content: center;
 
-    button{
-        background-color: rgb(7, 7, 7);
-        color:white;
-    }
-    
+      button {
+         background-color: rgb(7, 7, 7);
+         color: white;
+         justify-self: center;
+      }
+   }
+
 }
-
