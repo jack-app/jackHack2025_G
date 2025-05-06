@@ -39,10 +39,15 @@ export class PopUpWindowBase {
 import './popup_window_base.css';
 export function PopUpWindowDOM( { children, onClickClose } ) { // 必ずしも使う必要はなし
    return <div class="popup-window">
-      <header>
-         <span class="popup-minimize-button popup-handle-button">_</span>
-         <span class="popup-maximize-button popup-handle-button">□</span>
-         <span class="popup-close-button popup-handle-button" onClick={ onClickClose }>☓</span>
+      <div class="popup-background" />
+      <header class="popup-header">
+         <div class="popup-image" />
+         <div class="popup-title"> { 'PopUp' } </div>
+         <div class="popup-buttons">
+            <span class="popup-minimize-button popup-handle-button" />
+            <span class="popup-maximize-button popup-handle-button"></span>
+            <span class="popup-close-button popup-handle-button" onClick={ onClickClose } />
+         </div>
       </header>
       <div class="popup-content">
          { children }
