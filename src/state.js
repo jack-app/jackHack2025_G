@@ -99,6 +99,12 @@ const userSlice = createSlice( {
             ...state,
             score: state.score + 1,
          };
+      },
+      resetScore: (state) => {
+         return {
+            ...state,
+            score: 0,
+         };
       }
    }
 } );
@@ -121,4 +127,4 @@ export const { startGame, endGame, resetPage } = pageSlice.actions;
 export const { setDifficulty } = difficultySlice.actions;
 export const { addPopUp, removePopUp, resetWindows } = popUpSlice.actions;
 export const { setTimer } = timerSlice.actions;
-export const { setUserName, setScore, incrementScore } = userSlice.actions;
+export const { setUserName, setScore, incrementScore, resetScore } = userSlice.actions;

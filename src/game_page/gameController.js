@@ -1,4 +1,4 @@
-import { addPopUp, EASY, endGame, GameState, HARD, incrementScore, NORMAL, resetWindows, setTimer } from "../state";
+import { addPopUp, EASY, endGame, GameState, HARD, incrementScore, NORMAL, resetScore, resetWindows, setTimer } from "../state";
 import Game from "./main";
 import defaultPopUpFactory from "./popups/default_popup";
 import movingPopUpFactory from "./popups/moving_popup";
@@ -64,6 +64,7 @@ export default class GameController {
 
    start() {
       this.startTime = Date.now();
+      GameState.dispatch( resetScore() );
       this.frameInterval = setInterval( () => {
          GameState.dispatch( setTimer( this.timeSinceGameStart ) ); // update the timer in the state`
          this.popUpManager.updatePerFrame();
