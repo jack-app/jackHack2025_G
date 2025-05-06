@@ -6,9 +6,9 @@ import PopUpWindowManager from "./popups/popUpWindowManager";
 function getMaxWindowCountFromDifficulty( difficulty ) {
    switch ( difficulty ) {
       case EASY:
-         return 30;
+         return 70;
       case NORMAL:
-         return 40;
+         return 60;
       case HARD:
          return 50;
       default:
