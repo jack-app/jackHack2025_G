@@ -80,3 +80,8 @@
 .info-button:hover .credit {
    visibility: visible;
 }
+
+ul {
+   list-style-type: none;
+   padding: 0;
+}

@@ -43,13 +43,13 @@ export default function UserSelectArea() {
             <img src={ info_button_image } />
             <div class="credit">
                <p> Credit Team G </p>
-               <ol
+               <ul
                   class="credit-list">
                   <li> Enpitsu () </li>
                   <li>  Wulfy (<GitHubLink username={ '@pewulfman' } />) </li>
                   <li> 2023年6月3日 </li>
                   <li> 2023年6月4日 </li>
-               </ol>
+               </ul>
             </div>
          </div>
       </div>
