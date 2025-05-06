@@ -50,7 +50,7 @@ export default function UserSelectArea() {
                   <li> gla (<GitHubLink username={ '@gla-6910 ' } />)</li>
                   <li>  gata28 (<GitHubLink username={ '@gata2825' } />) </li>
                   <li>  masa (<GitHubLink username={ '@massa55in' } />) </li>
-                  <li> Teshi-K </li>
+                  <li> Teshi-K(<GitHubLink username={ '@Teshi-K' } />) </li>
                   <li> potato </li>
                </ul>
             </div>
