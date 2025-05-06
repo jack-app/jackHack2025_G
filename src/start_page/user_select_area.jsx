@@ -44,16 +44,14 @@ export default function UserSelectArea() {
             <div class="credit">
                <p> Credit Team G </p>
                <ul
-                  class="credit-list">       
+                  class="credit-list">
                   <li> Enpitsu (<GitHubLink username={ '@nagoyayuu15' } />) </li>
                   <li> Wulfy (<GitHubLink username={ '@pewulfman' } />) </li>
-                  <li> gla (<GitHubLink username={'@gla-6910 '} />)</li>
+                  <li> gla (<GitHubLink username={ '@gla-6910 ' } />)</li>
                   <li>  gata28 (<GitHubLink username={ '@gata2825' } />) </li>
                   <li>  masa (<GitHubLink username={ '@massa55in' } />) </li>
                   <li> Teshi-K </li>
                   <li> potato </li>
-                  <li> 2023年6月3日 </li>
-                  <li> 2023年6月4日 </li>
                </ul>
             </div>
          </div>
