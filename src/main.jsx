@@ -1,13 +1,9 @@
-import { h, Fragment } from 'start-dom-jsx'; // JSXを使うためのおまじない
 import './index.css';
 
-import { GameSetUp } from './messengers.js';
-import Start from './start_page/main.jsx';
 
 import Game from './game_page/main.jsx';
 
-import Result from './result_page/main.jsx';
-import { GAME_PAGE, GAME_RESULT_PAGE, GameState, START_PAGE } from './state.js';
+import { endGame, GameState, resetPage, startGame } from './state.js';
 import StartPage from './start_page/main.jsx';
 import ResultPage from './result_page/main.jsx';
 import { addListener } from '@reduxjs/toolkit';
@@ -15,24 +11,6 @@ import { addListener } from '@reduxjs/toolkit';
 class App {
    constructor( rootElement ) {
       this.root = rootElement;
-   }
-
-   render() {
-      console.log( 'render' );
-      switch ( GameState.getState().page ) {
-         case START_PAGE:
-            this.showStartPage();
-            break;
-         case GAME_PAGE:
-            this.runGame();
-            break;
-         case GAME_RESULT_PAGE:
-            this.showResultPage();
-            break;
-         default:
-            console.error( 'Unknown page state' );
-            break;
-      }
    }
 
    showStartPage() {
@@ -47,12 +25,15 @@ class App {
       console.log( 'showResultPage' );
       this.root.replaceChildren( ResultPage() );
    }
+   reset() {
+      this.root.replaceChildren( StartPage() );
+   }
 }
 
 const rootElement = document.getElementById( 'root' );
 const app = new App( rootElement );
 
-app.render();
-GameState.dispatch( addListener( { type: 'page/startGame', effect: () => app.render() } ) );
-GameState.dispatch( addListener( { type: 'page/endGame', effect: () => app.render() } ) );
-GameState.dispatch( addListener( { type: 'page/resetPage', effect: () => app.render() } ) );
+app.showStartPage();
+GameState.dispatch( addListener( { type: startGame().type, effect: () => app.runGame() } ) );
+GameState.dispatch( addListener( { type: endGame().type, effect: () => app.showResultPage() } ) );
+GameState.dispatch( addListener( { type: resetPage().type, effect: () => app.reset() } ) );
