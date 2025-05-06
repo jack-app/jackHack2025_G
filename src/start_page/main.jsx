@@ -1,6 +1,6 @@
 import { h, Fragment } from 'start-dom-jsx'; // JSXを使うためのおまじない
 import "./main.css";
-import windows_logo from "./windows.jpg";
+import windows_logo from "./windows-logo.png";
 
 import { GameSetUp } from "../messengers";
 import UserSelectArea from './user_select_area';
