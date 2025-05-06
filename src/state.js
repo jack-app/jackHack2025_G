@@ -33,7 +33,7 @@ export const { EASY, NORMAL, HARD } = {
 
 const difficultySlice = createSlice( {
    name: "difficulty",
-   initialState: EASY,
+   initialState: NORMAL,
    reducers: {
       setDifficulty: ( state, action ) => {
          return action.payload;

@@ -21,6 +21,7 @@ function GamePage() {
    const windowContainer = <div id="game-main-field"></div>;
    const skillItemContainer = <div class="skill-bar"></div>;
    const elapsedTime = <span class="elapsed-time">00:00:00</span>;
+   const score = <span class="score">0</span>;
 
 
    GameState.dispatch( addListener( {
@@ -33,6 +34,11 @@ function GamePage() {
          elapsedTime.innerText = updateTimer( action.payload );
       }
    } ) );
+   GameState.dispatch( addListener( {
+      type: "user/incrementScore", effect: () => {
+         score.innerText = GameState.getState().user.score;
+      }
+   } ) );
 
 
    const content = <div id="game-page-container">
@@ -43,6 +49,7 @@ function GamePage() {
          </div>
          <div class="window-bar-item center">
             { skillItemContainer }
+            <div class="score"> Score : { score } </div>
          </div>
          <div class="window-bar-item right">
             <img class="footer-icon" src={ SoundIcon } />
