@@ -1,14 +1,16 @@
 import getBiggerCloseButtonSkillFactory from './bigger_close_button'; // バツボタンを大きくするスキル
+import getDeleteWindowsSkillFactory from './delete_windows'; //windowを消すスキル
 
 export default class SkillManager {
    constructor( gameContainer, skillItemContainer, popUpManager ) {
       this.gameContainer = gameContainer; // ゲーム画面のコンテナ要素 クラスの付け替えを行う
       this.skillItemContainer = skillItemContainer; // スキルアイテムを追加するためのコンテナ要素
       this.popUpManager = popUpManager; // ポップアップウィンドウのマネージャー // スキルの効果の発動に使ってください
-      const skillContext = {notifyClick: this.invokeSkill.bind(this), gameContainer};     
+      const skillContext = {notifyClick: this.invokeSkill.bind(this), gameContainer, popUpManager};     
       this.skillSet = {
          0: [
             getBiggerCloseButtonSkillFactory(skillContext),
+            getDeleteWindowsSkillFactory(skillContext),
          ],
          1: [
          ],
