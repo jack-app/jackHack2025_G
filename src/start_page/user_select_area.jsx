@@ -12,6 +12,9 @@ export default function UserSelectArea() {
       console.log( "onClick" );
       GameState.dispatch( startGame() );
    };
+   const state = GameState.getState();
+   const { user_name, score } = state.user;
+
    return <div class="user-select-area">
       <div class="display-box">
          <div class="user-icon"></div>
@@ -21,7 +24,7 @@ export default function UserSelectArea() {
          </div>
       </div>
       <div class="input-box">
-         <input onChange={ onChange } />
+         <input onChange={ onChange } value={user_name}/>
          <img src={ button_image } onClick={ onClick } />
       </div>
    </div>;
