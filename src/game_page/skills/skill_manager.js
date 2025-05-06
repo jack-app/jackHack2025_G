@@ -10,9 +10,9 @@ export default class SkillManager {
       this.skillSet = {
          0: [
             getBiggerCloseButtonSkillFactory(skillContext),
-            getDeleteWindowsSkillFactory(skillContext),
          ],
          1: [
+            getDeleteWindowsSkillFactory(skillContext),
          ],
          2: [
 
@@ -39,9 +39,8 @@ export default class SkillManager {
    triggerSkillInsertion( score ) {
       // スコアの増加時に確率でスキルを追加する
 
-      if (Math.random() > 0.1) return; // スキルを獲得する確率
-      
-      if (score < 30) {
+      if (Math.random() > 0.12) return; // スキルを獲得する確率
+      if (score < 20) {
          this.appendSkill( 0 );
       } else if ( score < 50 ) {
          this.appendSkill( 1 );
