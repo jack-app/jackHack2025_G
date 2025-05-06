@@ -50,6 +50,7 @@ export default function UserSelectArea() {
                   <li>  gata28 (<GitHubLink username={ '@gata2825' } />) </li>
                   <li>  masa (<GitHubLink username={ '@massa55in' } />) </li>
                   <li> Teshi-K </li>
+                  <li> potato </li>
                   <li> 2023年6月3日 </li>
                   <li> 2023年6月4日 </li>
                </ul>
