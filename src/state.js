@@ -8,26 +8,18 @@ import { configureStore, createListenerMiddleware, createSlice } from "@reduxjs/
 //    gameScore: number; // スコア
 
 
-export const { START_PAGE, GAME_PAGE, GAME_RESULT_PAGE } = {
-   START_PAGE: 0,
-   GAME_PAGE: 1,
-   GAME_RESULT_PAGE: 2,
-};
 
 const pageSlice = createSlice( {
    name: "page",
-   initialState: START_PAGE,
+   initialState: null,
    reducers: {
       startGame: () => {
          console.log( "start game" );
-         return GAME_PAGE;
       },
       endGame: () => {
          console.log( "end game" );
-         return GAME_RESULT_PAGE;
       },
       resetPage: () => {
-         return START_PAGE;
       },
    },
 } );
@@ -99,6 +91,12 @@ const userSlice = createSlice( {
             ...state,
             score: state.score + 1,
          };
+      },
+      resetScore: (state) => {
+         return {
+            ...state,
+            score: 0,
+         };
       }
    }
 } );
@@ -121,4 +119,4 @@ export const { startGame, endGame, resetPage } = pageSlice.actions;
 export const { setDifficulty } = difficultySlice.actions;
 export const { addPopUp, removePopUp, resetWindows } = popUpSlice.actions;
 export const { setTimer } = timerSlice.actions;
-export const { setUserName, setScore, incrementScore } = userSlice.actions;
+export const { setUserName, setScore, incrementScore, resetScore } = userSlice.actions;

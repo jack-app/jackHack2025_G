@@ -1,0 +1,15 @@
+.popup-content{
+    font-family:'游ゴシック'; 
+    font-size:24px; 
+    font-weight:bold;
+    color: green;
+    .Beaf-Content {
+        color: red;
+        font-size:30px;
+    } 
+    /*.Cat-Content{
+        box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5); /* 影をつける */
+    .Dog-Content {
+        font-size:30px;
+    } 
+    }
