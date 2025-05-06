@@ -9,11 +9,15 @@ import leanPopUpFactory from "./popups/lean_popup";
 import scalingPopUpFactory from "./popups/scaling_popup";
 import priorityPopUpFactory from "./popups/priority_popup";
 
+import flickeringPopUpFactory from "./popups/flicker_popup";
+import evadePopUpFactory from "./popups/evade_popup";
 
 const popupKinds = [
     defaultPopUpFactory,
     movingPopUpFactory,
     multiPopUpFactory,
+   flickeringPopUpFactory,
+   evadePopUpFactory,
     rotatingPopUpFactory,
     leanPopUpFactory,
     scalingPopUpFactory,
