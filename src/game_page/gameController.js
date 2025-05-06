@@ -11,13 +11,14 @@ import priorityPopUpFactory from "./popups/priority_popup";
 
 import flickeringPopUpFactory from "./popups/flicker_popup";
 import evadePopUpFactory from "./popups/evade_popup";
+import PopUpWindowManager from "./popups/popUpWindowManager";
 
 const popupKinds = [
     defaultPopUpFactory,
     movingPopUpFactory,
     multiPopUpFactory,
-   flickeringPopUpFactory,
-   evadePopUpFactory,
+    flickeringPopUpFactory,
+    evadePopUpFactory,
     rotatingPopUpFactory,
     leanPopUpFactory,
     scalingPopUpFactory,
@@ -69,6 +70,14 @@ export default class GameController {
       this.windows = [];
       this.frameInterval = null; // store the setInterval ID
       this.framerate = 40; // FPS
+
+      this.popUpManager = new PopUpWindowManager(
+        popupContainer, 
+        this.framerate, 
+        () => this.onScoreUp(),
+        () => this.timeSinceGameStart,
+      )
+
       this.maxWindowCount = getMaxWindowCountFromDifficulty( GameState.getState().difficulty ); // 最大ウィンドウ数
       this.popUpContainer = popupContainer;
       this.lastPopUp = null;
@@ -157,18 +166,16 @@ export default class GameController {
       }
    }
 
-   judgeEnd( windows ) {
-      return windows.length > this.maxWindowCount;
+   judgeEnd() {
+      return this.popUpManager.windows > this.maxWindowCount;
    }
 
    start() {
       this.startTime = Date.now();
       this.frameInterval = setInterval( () => {
          GameState.dispatch( setTimer( this.timeSinceGameStart ) ); // update the timer in the state`
-         this.triggerWindowPopup();
-         this.changeInterval();
-         this.windows.forEach( ( win ) => win.update() );
-         if ( this.judgeEnd( this.windows ) ) {
+         this.popUpManager.updatePerFrame();
+         if ( this.judgeEnd() ) {
             console.log( "Game Over" );
             this.stop();
          }
